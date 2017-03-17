@@ -1,4 +1,4 @@
-package wbl.egr.uri.library.receivers;
+package wbl.egr.uri.library.ble.receivers;
 
 import android.content.BroadcastReceiver;
 import android.content.IntentFilter;

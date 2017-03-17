@@ -1,7 +1,6 @@
 package wbl.egr.uri.wbl;
 
 import android.app.job.JobScheduler;
-import android.bluetooth.BluetoothClass;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,12 +9,12 @@ import android.util.Log;
 
 import java.lang.ref.WeakReference;
 
-import wbl.egr.uri.library.receivers.BleConnectionUpdateReceiver;
-import wbl.egr.uri.library.receivers.BleDeviceInfoReceiver;
-import wbl.egr.uri.library.receivers.BleValueUpdateReceiver;
-import wbl.egr.uri.library.services.BleConnectionJobService;
+import wbl.egr.uri.library.ble.receivers.BleConnectionUpdateReceiver;
+import wbl.egr.uri.library.ble.receivers.BleDeviceInfoReceiver;
+import wbl.egr.uri.library.ble.receivers.BleValueUpdateReceiver;
+import wbl.egr.uri.library.ble.services.BleConnectionJobService;
 
-public class MainActivity extends AppCompatActivity {
+public class BleDemoActivity extends AppCompatActivity {
     private JobScheduler mJobScheduler;
     private Context mContext;
     private BleConnectionUpdateReceiver mBleConnectionUpdateReceiver = new BleConnectionUpdateReceiver() {

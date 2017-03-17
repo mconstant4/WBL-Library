@@ -1,4 +1,4 @@
-package wbl.egr.uri.library.services;
+package wbl.egr.uri.library.ble.services;
 
 import android.app.Notification;
 import android.app.job.JobInfo;
@@ -13,7 +13,6 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothManager;
-import android.bluetooth.BluetoothProfile;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -25,13 +24,12 @@ import android.util.Log;
 import java.lang.ref.WeakReference;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.nio.IntBuffer;
 import java.util.HashMap;
 import java.util.UUID;
 
-import wbl.egr.uri.library.receivers.BleConnectionUpdateReceiver;
-import wbl.egr.uri.library.receivers.BleDeviceInfoReceiver;
-import wbl.egr.uri.library.receivers.BleValueUpdateReceiver;
+import wbl.egr.uri.library.ble.receivers.BleConnectionUpdateReceiver;
+import wbl.egr.uri.library.ble.receivers.BleDeviceInfoReceiver;
+import wbl.egr.uri.library.ble.receivers.BleValueUpdateReceiver;
 
 /**
  * Created by mconstant on 3/15/17.

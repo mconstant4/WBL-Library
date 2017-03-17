@@ -136,5 +136,6 @@
     <orderEntry type="library" exported="" name="support-annotations-25.3.0" level="project" />
     <orderEntry type="library" exported="" name="support-vector-drawable-25.3.0" level="project" />
     <orderEntry type="module" module-name="wbl" exported="" />
+    <orderEntry type="library" exported="" name="microsoft-band" level="project" />
   </component>
 </module>

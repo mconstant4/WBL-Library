@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="microsoft-band">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/wbl/libs/microsoft-band.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="wbl.egr.uri.wbl.MainActivity">
+    tools:context="wbl.egr.uri.wbl.BleDemoActivity">
 
     <TextView
         android:id="@+id/sample_text"

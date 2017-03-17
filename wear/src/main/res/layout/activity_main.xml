@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/container"
-    tools:context="wbl.egr.uri.wbl.MainActivity"
+    tools:context="wbl.egr.uri.wbl.BleDemoActivity"
     tools:deviceIds="wear">
 
     <TextView
