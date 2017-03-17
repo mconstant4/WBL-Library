@@ -1,0 +1,15 @@
+Executable : /root/Android/Sdk/cmake/3.6.3155560/bin/cmake
+arguments : 
+-H/home/mconstant/Documents/WBL/apps/WBL_Library/mobile
+-B/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/.externalNativeBuild/cmake/release/mips
+-GAndroid Gradle - Ninja
+-DANDROID_ABI=mips
+-DANDROID_NDK=/root/Android/Sdk/ndk-bundle
+-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/cmake/release/obj/mips
+-DCMAKE_BUILD_TYPE=Release
+-DCMAKE_MAKE_PROGRAM=/root/Android/Sdk/cmake/3.6.3155560/bin/ninja
+-DCMAKE_TOOLCHAIN_FILE=/root/Android/Sdk/ndk-bundle/build/cmake/android.toolchain.cmake
+-DANDROID_PLATFORM=android-21
+-DCMAKE_CXX_FLAGS=
+jvmArgs : 
+
