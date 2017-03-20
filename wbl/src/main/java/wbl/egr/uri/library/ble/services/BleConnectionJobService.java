@@ -96,6 +96,7 @@ public class BleConnectionJobService extends JobService {
             JobInfo.Builder builder = new JobInfo.Builder(mJobId++, new ComponentName(context.get().getPackageName(), BleConnectionJobService.class.getName()));
             builder.setExtras(bundle);
             builder.setOverrideDeadline(10);
+            builder.setPersisted(false);
             if (jobScheduler.schedule(builder.build()) <= 0) {
                 Log.d("BleConnectionJobService", "Connect Failed (Error Scheduling Job)");
             }
@@ -118,6 +119,7 @@ public class BleConnectionJobService extends JobService {
             JobInfo.Builder builder = new JobInfo.Builder(mJobId++, new ComponentName(context.get().getPackageName(), BleConnectionJobService.class.getName()));
             builder.setExtras(bundle);
             builder.setOverrideDeadline(10);
+            builder.setPersisted(false);
             if (jobScheduler.schedule(builder.build()) <= 0) {
                 Log.d("BleConnectionJobService", "Discover Services Failed (Error Scheduling Job)");
             }
@@ -142,6 +144,7 @@ public class BleConnectionJobService extends JobService {
             JobInfo.Builder builder = new JobInfo.Builder(mJobId++, new ComponentName(context.get().getPackageName(), BleConnectionJobService.class.getName()));
             builder.setExtras(bundle);
             builder.setOverrideDeadline(10);
+            builder.setPersisted(false);
             if (jobScheduler.schedule(builder.build()) <= 0) {
                 Log.d("BleConnectionJobService", "Error Scheduling Job");
             }
@@ -166,6 +169,7 @@ public class BleConnectionJobService extends JobService {
             JobInfo.Builder builder = new JobInfo.Builder(mJobId++, new ComponentName(context.get().getPackageName(), BleConnectionJobService.class.getName()));
             builder.setExtras(bundle);
             builder.setOverrideDeadline(10);
+            builder.setPersisted(false);
             if (jobScheduler.schedule(builder.build()) <= 0) {
                 Log.d("BleConnectionJobService", "Disable Notifications Failed (Error Scheduling Job)");
             }
@@ -190,6 +194,7 @@ public class BleConnectionJobService extends JobService {
             JobInfo.Builder builder = new JobInfo.Builder(mJobId++, new ComponentName(context.get().getPackageName(), BleConnectionJobService.class.getName()));
             builder.setExtras(bundle);
             builder.setOverrideDeadline(10);
+            builder.setPersisted(false);
             if (jobScheduler.schedule(builder.build()) <= 0) {
                 Log.d("BleConnectionJobService", "Read Characteristic Failed (Error Scheduling Job)");
             }
@@ -214,6 +219,7 @@ public class BleConnectionJobService extends JobService {
             JobInfo.Builder builder = new JobInfo.Builder(mJobId++, new ComponentName(context.get().getPackageName(), BleConnectionJobService.class.getName()));
             builder.setExtras(bundle);
             builder.setOverrideDeadline(10);
+            builder.setPersisted(false);
             if (jobScheduler.schedule(builder.build()) <= 0) {
                 Log.d("BleConnectionJobService", "Write Characteristic Failed (Error Scheduling Job)");
             }
@@ -237,6 +243,7 @@ public class BleConnectionJobService extends JobService {
             builder.setExtras(bundle);
             //Keep extra delay for disconnect to ensure other actions are performed before this is executed
             builder.setOverrideDeadline(100);
+            builder.setPersisted(false);
             if (jobScheduler.schedule(builder.build()) <= 0) {
                 Log.d("BleConnectionJobService", "Disconnect Failed (Error Scheduling Job)");
             }

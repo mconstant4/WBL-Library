@@ -2,6 +2,24 @@
 <items version="2" >
 
     <item
+        is-multidex="true"
+        jar="/root/.android/build-cache/f559eceb2bfa8507b2ed9a889b546b4a839619c4/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/transforms/dex/debug/folders/1000/10/classes_310289b2548604cc39d14b5c563e126babf0a3f6/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="1241bd6659792dab8a3952da0753c2deef1c0dcf">
+        <dex dex="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_76fe6edfaa768103fcabcc78e597dbca68f6f948/classes.dex" />
+    </item>
+    <item
         is-multidex="false"
         jar="/root/.android/build-cache/1652381b0408cb857659433c6b1d6c49c528a262/output/jars/classes.jar"
         jumboMode="false"
@@ -20,13 +38,49 @@
         <dex dex="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/pre-dexed/debug/classes_f19f2ff647bd35353bebbe86d971c6b102e0dfb0.jar" />
     </item>
     <item
-        is-multidex="false"
-        jar="/home/mconstant/Documents/WBL/apps/WBL_Library/wbl/build/intermediates/bundles/default/classes.jar"
-        jumboMode="false"
+        is-multidex="true"
+        jar="/root/.android/build-cache/a0ea90f97ffba2e9c8b11edd227014f36e626260/output/jars/classes.jar"
+        jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="f3f14a919818ae9c78226a4c995ab4f17293e2f4">
-        <dex dex="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/pre-dexed/debug/classes_2094a9be31438bea2db886f1c910170ca773d1d4.jar" />
+        sha1="425c7b17887e5c3f8cbdf67ba171bc246f29b42c">
+        <dex dex="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/transforms/dex/debug/folders/1000/10/classes_5c3f91892c299b649a8b3faf26055364fcffaa63/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/root/Android/Sdk/extras/m2repository/com/android/support/constraint/constraint-layout-solver/1.0.2/constraint-layout-solver-1.0.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
+        <dex dex="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/transforms/dex/debug/folders/1000/10/constraint-layout-solver-1.0.2_76f81077aea9bd1699aabfb9818dc8fa3bde44df/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/root/.android/build-cache/1652381b0408cb857659433c6b1d6c49c528a262/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="70f23cb87278f89aa51e6f57e8f0fd5266572d95">
+        <dex dex="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/transforms/dex/debug/folders/1000/10/classes_56f595d5f9344c99f5ec6e465af1d71b58ebbf08/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/root/.android/build-cache/069fc5a333541c1687da3c055b50661dda62a9e3/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="5cc5ef8347a6bafa14556cbd35230aa9b3431bb0">
+        <dex dex="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/transforms/dex/debug/folders/1000/10/classes_f19f2ff647bd35353bebbe86d971c6b102e0dfb0/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/mconstant/Documents/WBL/apps/WBL_Library/wbl/build/intermediates/bundles/default/libs/microsoft-band.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="f6c3d837bd041b6a3b4945f84c6ae1419f7be5e8">
+        <dex dex="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/transforms/dex/debug/folders/1000/8/microsoft-band_14918bf4da6524398f4ee6d2dc53ac27bc3afd62/classes.dex" />
     </item>
     <item
         is-multidex="false"
@@ -47,6 +101,24 @@
         <dex dex="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/pre-dexed/debug/classes_815fdb6c7de0ac960a8105b247ee848299d379d4.jar" />
     </item>
     <item
+        is-multidex="true"
+        jar="/root/.android/build-cache/359ea5f9b7902520ac501ba8ac92b9da785134ab/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="bd75f9f0296fe220da6d0ad961831b04541c4452">
+        <dex dex="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/transforms/dex/debug/folders/1000/10/classes_815fdb6c7de0ac960a8105b247ee848299d379d4/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/root/.android/build-cache/a8f961a62af9da3757573347dd048c89576345fb/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="4b746ef0fd46acb5aaf3d9ab9a4cec22c28d3211">
+        <dex dex="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/transforms/dex/debug/folders/1000/10/classes_9d72aa825a1e9a6f5877b5752d50b2238f89faea/classes.dex" />
+    </item>
+    <item
         is-multidex="false"
         jar="/root/.android/build-cache/118d3773e4c49772fd0abcce3f21bffbcb20e7dc/output/jars/classes.jar"
         jumboMode="false"
@@ -56,13 +128,13 @@
         <dex dex="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/pre-dexed/debug/classes_65560ccc55961b1e02f6125eece435e4071f8231.jar" />
     </item>
     <item
-        is-multidex="false"
-        jar="/root/.android/build-cache/b57af169ad22d154427eb7cf6d3e1485bee8729b/output/jars/classes.jar"
-        jumboMode="false"
+        is-multidex="true"
+        jar="/root/.android/build-cache/c3b37af2e1191724b95727d192d6a37969ad97ee/output/jars/classes.jar"
+        jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="1ac56e5801e986583cbe27f2cce57f626cc7ff93">
-        <dex dex="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/pre-dexed/debug/classes_909c58898148989542c0143c41a897d6cad7025c.jar" />
+        sha1="93c1199fcb0a34b980e6fff8350daff62e696ec2">
+        <dex dex="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/transforms/dex/debug/folders/1000/10/classes_7573152c64dc3fa6ab79829f3a0a2d4372821a34/classes.dex" />
     </item>
     <item
         is-multidex="false"
@@ -74,6 +146,15 @@
         <dex dex="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/pre-dexed/debug/classes_b20e8fe5b9ed66fdf93de5ff3c8f0cc7117823a0.jar" />
     </item>
     <item
+        is-multidex="true"
+        jar="/root/.android/build-cache/f43e4c35aafd548097a909231f2634280f19c2db/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="93c10d68ab5ea070f15782ae6d3a28d1f1d8f45e">
+        <dex dex="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/transforms/dex/debug/folders/1000/10/classes_b20e8fe5b9ed66fdf93de5ff3c8f0cc7117823a0/classes.dex" />
+    </item>
+    <item
         is-multidex="false"
         jar="/root/.android/build-cache/9f432a7e07217c9d87877ce29c5f83b15de1340e/output/jars/classes.jar"
         jumboMode="false"
@@ -83,6 +164,15 @@
         <dex dex="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/pre-dexed/debug/classes_611331630ff876cadc6a6e7e250d911184196a25.jar" />
     </item>
     <item
+        is-multidex="true"
+        jar="/root/.android/build-cache/e6279a51385a8a256fec93e3455d237d732f58b1/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
+        <dex dex="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/transforms/dex/debug/folders/1000/10/classes_5a4edf42fd711721951dad78e53fd816758257ab/classes.dex" />
+    </item>
+    <item
         is-multidex="false"
         jar="/root/.android/build-cache/c3b37af2e1191724b95727d192d6a37969ad97ee/output/jars/classes.jar"
         jumboMode="false"
@@ -90,6 +180,87 @@
         revision="25.0.2"
         sha1="93c1199fcb0a34b980e6fff8350daff62e696ec2">
         <dex dex="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/pre-dexed/debug/classes_7573152c64dc3fa6ab79829f3a0a2d4372821a34.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/root/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/25.3.0/support-annotations-25.3.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="dd84903d2e1af25a6081ef9038ad863cb14ca3a0">
+        <dex dex="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/pre-dexed/debug/support-annotations-25.3.0_e4bfc90b9b60686c39e996920979dac39bd15ce0.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/root/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/25.3.0/support-annotations-25.3.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="dd84903d2e1af25a6081ef9038ad863cb14ca3a0">
+        <dex dex="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-25.3.0_e4bfc90b9b60686c39e996920979dac39bd15ce0/classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/root/.android/build-cache/e6279a51385a8a256fec93e3455d237d732f58b1/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
+        <dex dex="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/pre-dexed/debug/classes_5a4edf42fd711721951dad78e53fd816758257ab.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/mconstant/Documents/WBL/apps/WBL_Library/wbl/build/intermediates/bundles/default/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="f3f14a919818ae9c78226a4c995ab4f17293e2f4">
+        <dex dex="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/pre-dexed/debug/classes_2094a9be31438bea2db886f1c910170ca773d1d4.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/root/.android/build-cache/9f432a7e07217c9d87877ce29c5f83b15de1340e/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="3d13e510077b35fe8e49930a627dd849ad5da0dc">
+        <dex dex="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/transforms/dex/debug/folders/1000/10/classes_611331630ff876cadc6a6e7e250d911184196a25/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="c82741bc129dd5f99f11a4ab8666ae24262053b6">
+        <dex dex="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_31a024839e6aff3b1595b073dd5f44b06a1df943/classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/root/.android/build-cache/b57af169ad22d154427eb7cf6d3e1485bee8729b/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="1ac56e5801e986583cbe27f2cce57f626cc7ff93">
+        <dex dex="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/pre-dexed/debug/classes_909c58898148989542c0143c41a897d6cad7025c.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/root/.android/build-cache/118d3773e4c49772fd0abcce3f21bffbcb20e7dc/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="518768f3200963fbfec652f498da2c9d39245234">
+        <dex dex="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/transforms/dex/debug/folders/1000/10/classes_65560ccc55961b1e02f6125eece435e4071f8231/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/root/.android/build-cache/b57af169ad22d154427eb7cf6d3e1485bee8729b/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="1ac56e5801e986583cbe27f2cce57f626cc7ff93">
+        <dex dex="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/transforms/dex/debug/folders/1000/10/classes_909c58898148989542c0143c41a897d6cad7025c/classes.dex" />
     </item>
     <item
         is-multidex="false"
@@ -110,6 +281,15 @@
         <dex dex="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/pre-dexed/debug/classes_f36fcec3b98e6825a5976b2f1ea65b5fcc179d2d.jar" />
     </item>
     <item
+        is-multidex="true"
+        jar="/root/.android/build-cache/6f0c00ace089121c721a9fee2f2dadbde6e837fb/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d6a04527c17597019dad82777c5094a3d60d1c33">
+        <dex dex="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/transforms/dex/debug/folders/1000/10/classes_5a99fddda2883803564f1d18c21175855b38ac78/classes.dex" />
+    </item>
+    <item
         is-multidex="false"
         jar="/root/.android/build-cache/a0ea90f97ffba2e9c8b11edd227014f36e626260/output/jars/classes.jar"
         jumboMode="false"
@@ -117,15 +297,6 @@
         revision="25.0.2"
         sha1="425c7b17887e5c3f8cbdf67ba171bc246f29b42c">
         <dex dex="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/pre-dexed/debug/classes_5c3f91892c299b649a8b3faf26055364fcffaa63.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/root/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/25.3.0/support-annotations-25.3.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="dd84903d2e1af25a6081ef9038ad863cb14ca3a0">
-        <dex dex="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/pre-dexed/debug/support-annotations-25.3.0_e4bfc90b9b60686c39e996920979dac39bd15ce0.jar" />
     </item>
     <item
         is-multidex="false"
@@ -137,13 +308,13 @@
         <dex dex="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/pre-dexed/debug/classes_310289b2548604cc39d14b5c563e126babf0a3f6.jar" />
     </item>
     <item
-        is-multidex="false"
-        jar="/root/.android/build-cache/e6279a51385a8a256fec93e3455d237d732f58b1/output/jars/classes.jar"
-        jumboMode="false"
+        is-multidex="true"
+        jar="/root/.android/build-cache/61854a5454c3dd83dd95cb7ea15d8ddb0df9c750/output/jars/classes.jar"
+        jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
-        <dex dex="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/pre-dexed/debug/classes_5a4edf42fd711721951dad78e53fd816758257ab.jar" />
+        sha1="101393e975eaf36e3ff40b277ee9a019e077afef">
+        <dex dex="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/transforms/dex/debug/folders/1000/10/classes_f36fcec3b98e6825a5976b2f1ea65b5fcc179d2d/classes.dex" />
     </item>
     <item
         is-multidex="false"

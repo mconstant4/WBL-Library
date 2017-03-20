@@ -40,13 +40,6 @@ import wbl.egr.uri.library.band.band_listeners.BandRRIntervalListener;
 import wbl.egr.uri.library.band.band_listeners.BandSkinTemperatureListener;
 import wbl.egr.uri.library.band.receivers.BandContactStateReceiver;
 import wbl.egr.uri.library.band.receivers.BandUpdateReceiver;
-import wbl.egr.uri.library.ble.services.BleConnectionJobService;
-
-import static com.microsoft.band.ConnectionState.BINDING;
-import static com.microsoft.band.ConnectionState.BOUND;
-import static com.microsoft.band.ConnectionState.CONNECTED;
-import static com.microsoft.band.ConnectionState.UNBINDING;
-import static com.microsoft.band.ConnectionState.UNBOUND;
 
 /**
  * Created by root on 3/17/17.
@@ -62,7 +55,7 @@ public class BandConnectionJobService extends JobService {
 
     private static int mJobId = 0;
 
-    public static void connect(WeakReference<Context> context, JobScheduler jobScheduler, int action) {
+    public static void connect(WeakReference<Context> context, JobScheduler jobScheduler) {
         if (context == null || jobScheduler == null) {
             Log.d("BandConnectionService", "Connect Failed (Connect called with invalid parameters)");
             return;
@@ -83,7 +76,7 @@ public class BandConnectionJobService extends JobService {
         }
     }
 
-    public static void disconnect(WeakReference<Context> context, JobScheduler jobScheduler, int action) {
+    public static void disconnect(WeakReference<Context> context, JobScheduler jobScheduler) {
         if (context == null || jobScheduler == null) {
             Log.d("BandConnectionService", "Connect Failed (Connect called with invalid parameters)");
             return;
@@ -104,7 +97,7 @@ public class BandConnectionJobService extends JobService {
         }
     }
 
-    public static void startStreaming(WeakReference<Context> context, JobScheduler jobScheduler, int action) {
+    public static void startStreaming(WeakReference<Context> context, JobScheduler jobScheduler) {
         if (context == null || jobScheduler == null) {
             Log.d("BandConnectionService", "Connect Failed (Connect called with invalid parameters)");
             return;
@@ -125,7 +118,7 @@ public class BandConnectionJobService extends JobService {
         }
     }
 
-    public static void stopStreaming(WeakReference<Context> context, JobScheduler jobScheduler, int action) {
+    public static void stopStreaming(WeakReference<Context> context, JobScheduler jobScheduler) {
         if (context == null || jobScheduler == null) {
             Log.d("BandConnectionService", "Connect Failed (Connect called with invalid parameters)");
             return;
@@ -211,6 +204,7 @@ public class BandConnectionJobService extends JobService {
     private BandResultCallback<ConnectionState> mBandConnectResultCallback = new BandResultCallback<ConnectionState>() {
         @Override
         public void onResult(ConnectionState connectionState, Throwable throwable) {
+            Intent intent;
             switch (connectionState) {
                 case CONNECTED:
                     log("Connected");
@@ -221,9 +215,10 @@ public class BandConnectionJobService extends JobService {
                     } catch (BandException e) {
                         e.printStackTrace();
                     }
+
                     //Broadcast Update
                     log("Broadcasting Update");
-                    Intent intent = new Intent(BandUpdateReceiver.INTENT_FILTER.getAction(0));
+                    intent = new Intent(BandUpdateReceiver.INTENT_FILTER.getAction(0));
                     intent.putExtra(BandUpdateReceiver.UPDATE_BAND_CONNECTED, true);
                     sendBroadcast(intent);
                     break;
@@ -233,6 +228,12 @@ public class BandConnectionJobService extends JobService {
                     updateNotification("DISCONNECTED");
                     Toast.makeText(mContext, "Could not connect to Band", Toast.LENGTH_LONG).show();
                     disconnect();
+                    //Broadcast Update
+                    log("Broadcasting Update");
+                    intent = new Intent(BandUpdateReceiver.INTENT_FILTER.getAction(0));
+                    intent.putExtra(BandUpdateReceiver.UPDATE_BAND_DISCONNECTED, true);
+                    sendBroadcast(intent);
+                    updateNotification("Band Disconnected");
                     break;
                 case BINDING:
                     log("Binding");
@@ -242,6 +243,13 @@ public class BandConnectionJobService extends JobService {
                     mState = STATE_OTHER;
                     updateNotification("UNBOUND");
                     Toast.makeText(mContext, "Could not connect to Band", Toast.LENGTH_LONG).show();
+                    //Send Broadcast
+                    intent = new Intent(BandUpdateReceiver.INTENT_FILTER.getAction(0));
+                    intent.putExtra(BandUpdateReceiver.UPDATE_BAND_DISCONNECTED, true);
+                    sendBroadcast(intent);
+                    updateNotification("Band Disconnected");
+
+                    stopSelf();
                     break;
                 case UNBINDING:
                     log("Unbinding");
@@ -258,7 +266,11 @@ public class BandConnectionJobService extends JobService {
         @Override
         public void onResult(Void aVoid, Throwable throwable) {
             log("Disconnected");
-            stopSelf();
+            updateNotification("Band Disconnected");
+            //Send Broadcast
+            Intent intent = new Intent(BandUpdateReceiver.INTENT_FILTER.getAction(0));
+            intent.putExtra(BandUpdateReceiver.UPDATE_BAND_DISCONNECTED, true);
+            sendBroadcast(intent);
         }
     };
 
