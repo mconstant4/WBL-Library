@@ -39,14 +39,14 @@ import wbl.egr.uri.library.band.band_listeners.BandHeartRateListener;
 import wbl.egr.uri.library.band.band_listeners.BandRRIntervalListener;
 import wbl.egr.uri.library.band.band_listeners.BandSkinTemperatureListener;
 import wbl.egr.uri.library.band.receivers.BandContactStateReceiver;
-import wbl.egr.uri.library.band.receivers.BandUpdateReceiver;
+import wbl.egr.uri.library.band.receivers.BandUpdateStateReceiver;
 
 /**
  * Created by root on 3/17/17.
  */
 
 public class BandConnectionJobService extends JobService {
-    public static final String ACTION_TYPE = "uri.egr.wbl.library.band_action_type";
+    /*public static final String ACTION_TYPE = "uri.egr.wbl.library.band_action_type";
     public static final int ACTION_CONNECT = 0;
     public static final int ACTION_DISCONNECT = 1;
     public static final int ACTION_START_STREAM = 2;
@@ -218,8 +218,8 @@ public class BandConnectionJobService extends JobService {
 
                     //Broadcast Update
                     log("Broadcasting Update");
-                    intent = new Intent(BandUpdateReceiver.INTENT_FILTER.getAction(0));
-                    intent.putExtra(BandUpdateReceiver.UPDATE_BAND_CONNECTED, true);
+                    intent = new Intent(BandUpdateStateReceiver.INTENT_FILTER.getAction(0));
+                    intent.putExtra(BandUpdateStateReceiver.UPDATE_BAND_CONNECTED, true);
                     sendBroadcast(intent);
                     break;
                 case BOUND:
@@ -230,8 +230,8 @@ public class BandConnectionJobService extends JobService {
                     disconnect();
                     //Broadcast Update
                     log("Broadcasting Update");
-                    intent = new Intent(BandUpdateReceiver.INTENT_FILTER.getAction(0));
-                    intent.putExtra(BandUpdateReceiver.UPDATE_BAND_DISCONNECTED, true);
+                    intent = new Intent(BandUpdateStateReceiver.INTENT_FILTER.getAction(0));
+                    intent.putExtra(BandUpdateStateReceiver.UPDATE_BAND_DISCONNECTED, true);
                     sendBroadcast(intent);
                     updateNotification("Band Disconnected");
                     break;
@@ -244,8 +244,8 @@ public class BandConnectionJobService extends JobService {
                     updateNotification("UNBOUND");
                     Toast.makeText(mContext, "Could not connect to Band", Toast.LENGTH_LONG).show();
                     //Send Broadcast
-                    intent = new Intent(BandUpdateReceiver.INTENT_FILTER.getAction(0));
-                    intent.putExtra(BandUpdateReceiver.UPDATE_BAND_DISCONNECTED, true);
+                    intent = new Intent(BandUpdateStateReceiver.INTENT_FILTER.getAction(0));
+                    intent.putExtra(BandUpdateStateReceiver.UPDATE_BAND_DISCONNECTED, true);
                     sendBroadcast(intent);
                     updateNotification("Band Disconnected");
 
@@ -268,17 +268,23 @@ public class BandConnectionJobService extends JobService {
             log("Disconnected");
             updateNotification("Band Disconnected");
             //Send Broadcast
-            Intent intent = new Intent(BandUpdateReceiver.INTENT_FILTER.getAction(0));
-            intent.putExtra(BandUpdateReceiver.UPDATE_BAND_DISCONNECTED, true);
+            Intent intent = new Intent(BandUpdateStateReceiver.INTENT_FILTER.getAction(0));
+            intent.putExtra(BandUpdateStateReceiver.UPDATE_BAND_DISCONNECTED, true);
             sendBroadcast(intent);
         }
     };
-
+*/
+    private Handler mJobHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            return true;
+        }
+    });
     @Override
     public void onCreate() {
         super.onCreate();
         log("Service Created");
-
+/*
         mContext = this;
         mState = STATE_OTHER;
 
@@ -303,7 +309,7 @@ public class BandConnectionJobService extends JobService {
         mBandRRIntervalListener = new BandRRIntervalListener(this);
         mBandSkinTemperatureListener = new BandSkinTemperatureListener(this);
 
-        registerReceiver(mBandContactStateReceiver, BandContactStateReceiver.INTENT_FILTER);
+        registerReceiver(mBandContactStateReceiver, BandContactStateReceiver.INTENT_FILTER);*/
     }
 
 
@@ -328,7 +334,7 @@ public class BandConnectionJobService extends JobService {
 
         super.onDestroy();
     }
-
+/*
     private void connect() {
         if (mBandClientManager == null) {
             log("Connect Failed (Band Client Manager not Initialized)");
@@ -344,7 +350,7 @@ public class BandConnectionJobService extends JobService {
              * Implement UI to allow User to choose Band to pair to.
              * For now, always choose pairedBands[0]
              */
-            connect(pairedBands[0]);
+           /* connect(pairedBands[0]);
         } else {
             connect(pairedBands[0]);
         }
@@ -368,9 +374,9 @@ public class BandConnectionJobService extends JobService {
         bandInfo[1] = mBandAddress;
 
         //Broadcast Update
-        Intent intent = new Intent(BandUpdateReceiver.INTENT_FILTER.getAction(0));
-        intent.putExtra(BandUpdateReceiver.UPDATE_BAND_INFO, true);
-        intent.putExtra(BandUpdateReceiver.EXTRA_BAND_INFO, bandInfo);
+        Intent intent = new Intent(BandUpdateStateReceiver.INTENT_FILTER.getAction(0));
+        intent.putExtra(BandUpdateStateReceiver.UPDATE_BAND_INFO, true);
+        intent.putExtra(BandUpdateStateReceiver.EXTRA_BAND_INFO, bandInfo);
         this.sendBroadcast(intent);
     }
 
@@ -492,6 +498,7 @@ public class BandConnectionJobService extends JobService {
                 .setPriority(Notification.PRIORITY_HIGH);
         notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build());
     }
+    */
 
     private void log(String message) {
         Log.d(this.getClass().getSimpleName(), message);

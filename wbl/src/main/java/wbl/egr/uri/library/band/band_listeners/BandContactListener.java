@@ -15,6 +15,8 @@ import java.util.Date;
 import java.util.Locale;
 
 import wbl.egr.uri.library.band.receivers.BandContactStateReceiver;
+import wbl.egr.uri.library.band.receivers.BandUpdateStateReceiver;
+import wbl.egr.uri.library.band.services.BandConnectionJobServiceBETA;
 
 
 /**
@@ -40,8 +42,8 @@ public class BandContactListener implements BandContactEventListener {
         //DataLogService.log(mContext, new File(MainActivity.getRootFile(mContext), "contact.csv"), data, HEADER);
 
         //Broadcast Update
-        Intent intent = new Intent(BandContactStateReceiver.INTENT_FILTER.getAction(0));
-        intent.putExtra(BandContactStateReceiver.BAND_STATE, bandContactEvent.getContactState().name().equals(BandContactState.WORN.name()));
+        Intent intent = new Intent(BandUpdateStateReceiver.INTENT_FILTER.getAction(0));
+        intent.putExtra(BandUpdateStateReceiver.EXTRA_NEW_STATE, bandContactEvent.getContactState() == BandContactState.WORN);
         mContext.sendBroadcast(intent);
     }
 }

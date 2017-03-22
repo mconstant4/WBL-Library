@@ -13,6 +13,8 @@
             android:permission="android.permission.BIND_JOB_SERVICE" />
         <service android:name=".band.services.BandConnectionJobService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
+        <service android:name=".band.services.BandConnectionJobServiceBETA"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
 
     </application>
 

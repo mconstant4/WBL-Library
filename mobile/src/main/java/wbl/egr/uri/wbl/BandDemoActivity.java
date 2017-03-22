@@ -10,25 +10,26 @@ import android.util.Log;
 
 import java.lang.ref.WeakReference;
 
-import wbl.egr.uri.library.band.receivers.BandUpdateReceiver;
-import wbl.egr.uri.library.band.services.BandConnectionJobService;
+import wbl.egr.uri.library.band.receivers.BandUpdateStateReceiver;
+import wbl.egr.uri.library.band.services.BandConnectionJobServiceBETA;
 import wbl.egr.uri.library.band.tasks.RequestHeartRateTask;
 
 /**
  * Created by root on 3/17/17.
+ *
  */
 
 public class BandDemoActivity extends AppCompatActivity {
-    private WeakReference<Context> mContext;
+    /*private WeakReference<Context> mContext;
     private JobScheduler mJobScheduler;
 
-    private BandUpdateReceiver mBandUpdateReceiver = new BandUpdateReceiver() {
+    private BandUpdateStateReceiver mBandUpdateReceiver = new BandUpdateStateReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             Log.d("DEMO", "Update Received");
-            if (intent.hasExtra(BandUpdateReceiver.UPDATE_BAND_CONNECTED)) {
+            if (intent.hasExtra(BandUpdateStateReceiver.UPDATE_BAND_CONNECTED)) {
                 BandConnectionJobService.startStreaming(mContext, mJobScheduler);
-            } else if (intent.hasExtra(BandUpdateReceiver.UPDATE_BAND_DISCONNECTED)) {
+            } else if (intent.hasExtra(BandUpdateStateReceiver.UPDATE_BAND_DISCONNECTED)) {
                 Log.d("DEMO", "BAND DISCONNECTED");
                 mJobScheduler.cancelAll();
                 stopService(new Intent(mContext.get(), BandConnectionJobService.class));
@@ -46,7 +47,7 @@ public class BandDemoActivity extends AppCompatActivity {
         startService(new Intent(this, BandConnectionJobService.class));
 
         mJobScheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
-        registerReceiver(mBandUpdateReceiver, BandUpdateReceiver.INTENT_FILTER);
+        registerReceiver(mBandUpdateReceiver, BandUpdateStateReceiver.INTENT_FILTER);
 
         new RequestHeartRateTask().execute(new WeakReference<Activity>(this));
     }
@@ -70,5 +71,66 @@ public class BandDemoActivity extends AppCompatActivity {
         unregisterReceiver(mBandUpdateReceiver);
 
         super.onDestroy();
+    }*/
+
+    private Context mContext;
+    private JobScheduler mJobScheduler;
+
+    private BandUpdateStateReceiver mBandUpdateStateReceiver = new BandUpdateStateReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            switch (intent.getIntExtra(BandUpdateStateReceiver.EXTRA_NEW_STATE, -1)) {
+                case BandConnectionJobServiceBETA.STATE_CONNECTED:
+                    log("Connected");
+                    String[] sensors = {};
+                    BandConnectionJobServiceBETA.startStream(mContext, mJobScheduler, true, sensors);
+                    break;
+                case BandConnectionJobServiceBETA.STATE_DISCONNECTED:
+                    log("Disconnected");
+
+                    break;
+                case BandConnectionJobServiceBETA.STATE_BAND_NOT_WORN:
+                    log("Band not Worn");
+
+                    break;
+                case BandConnectionJobServiceBETA.STATE_STREAMING:
+                    log("Start Streaming");
+                    break;
+                case BandConnectionJobServiceBETA.STATE_BAND_OFF:
+                    log("Band off");
+                    break;
+            }
+        }
+    };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        new RequestHeartRateTask().execute(new WeakReference<Activity>(this));
+
+        startService(new Intent(this, BandConnectionJobServiceBETA.class));
+        registerReceiver(mBandUpdateStateReceiver, BandUpdateStateReceiver.INTENT_FILTER);
+        mJobScheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
+
+        mContext = this;
+
+        BandConnectionJobServiceBETA.connect(this, mJobScheduler, true);
+    }
+
+    @Override
+    protected void onDestroy() {
+        BandConnectionJobServiceBETA.stopStream(mContext, mJobScheduler);
+        BandConnectionJobServiceBETA.disconnect(mContext, mJobScheduler);
+        unregisterReceiver(mBandUpdateStateReceiver);
+        mJobScheduler.cancelAll();
+        stopService(new Intent(this, BandConnectionJobServiceBETA.class));
+
+        super.onDestroy();
+    }
+
+    private void log(String message) {
+        Log.d(this.getClass().getSimpleName(), message);
     }
 }
