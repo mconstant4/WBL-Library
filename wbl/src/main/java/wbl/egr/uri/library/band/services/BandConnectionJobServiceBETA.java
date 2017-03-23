@@ -25,9 +25,12 @@ import com.microsoft.band.BandInfo;
 import com.microsoft.band.BandResultCallback;
 import com.microsoft.band.ConnectionState;
 import com.microsoft.band.InvalidBandVersionException;
+import com.microsoft.band.notifications.VibrationType;
 import com.microsoft.band.sensors.BandSensorManager;
 import com.microsoft.band.sensors.GsrSampleRate;
 import com.microsoft.band.sensors.SampleRate;
+
+import java.lang.ref.WeakReference;
 
 import wbl.egr.uri.library.band.band_listeners.BandAccelerometerListener;
 import wbl.egr.uri.library.band.band_listeners.BandAmbientLightListener;
@@ -36,9 +39,24 @@ import wbl.egr.uri.library.band.band_listeners.BandGsrListener;
 import wbl.egr.uri.library.band.band_listeners.BandHeartRateListener;
 import wbl.egr.uri.library.band.band_listeners.BandRRIntervalListener;
 import wbl.egr.uri.library.band.band_listeners.BandSkinTemperatureListener;
+import wbl.egr.uri.library.band.models.SensorModel;
 import wbl.egr.uri.library.band.receivers.BandContactStateReceiver;
 import wbl.egr.uri.library.band.receivers.BandUpdateStateReceiver;
 
+import static wbl.egr.uri.library.band.models.SensorModel.SENSOR_ACCELEROMETER;
+import static wbl.egr.uri.library.band.models.SensorModel.SENSOR_ALTIMETER;
+import static wbl.egr.uri.library.band.models.SensorModel.SENSOR_AMBIENT_LIGHT;
+import static wbl.egr.uri.library.band.models.SensorModel.SENSOR_BAROMETER;
+import static wbl.egr.uri.library.band.models.SensorModel.SENSOR_CALORIES;
+import static wbl.egr.uri.library.band.models.SensorModel.SENSOR_CONTACT;
+import static wbl.egr.uri.library.band.models.SensorModel.SENSOR_DISTANCE;
+import static wbl.egr.uri.library.band.models.SensorModel.SENSOR_GSR;
+import static wbl.egr.uri.library.band.models.SensorModel.SENSOR_GYROSCOPE;
+import static wbl.egr.uri.library.band.models.SensorModel.SENSOR_HEART_RATE;
+import static wbl.egr.uri.library.band.models.SensorModel.SENSOR_PEDOMETER;
+import static wbl.egr.uri.library.band.models.SensorModel.SENSOR_RR_INTERVAL;
+import static wbl.egr.uri.library.band.models.SensorModel.SENSOR_SKIN_TEMPERATURE;
+import static wbl.egr.uri.library.band.models.SensorModel.SENSOR_UV;
 import static wbl.egr.uri.library.band.receivers.BandContactStateReceiver.BAND_STATE;
 
 /**
@@ -64,83 +82,102 @@ public class BandConnectionJobServiceBETA extends JobService {
     public static final int STATE_BAND_NOT_WORN = 3;
     public static final int STATE_BAND_OFF = 4;
 
-    public static void connect(Context context, JobScheduler jobScheduler, boolean enableHapticFeedback) {
-        if (context == null || jobScheduler == null) {
-            Log.d("BandConnectionService", "Connect Failed (Connect called with invalid parameters)");
+    public static void connect(WeakReference<Context> context, boolean enableHapticFeedback) {
+        if (context == null) {
+            Log.d("BandConnectionService", "Connect Call Failed (Called with invalid parameters)");
             return;
         }
 
-        PersistableBundle bundle = new PersistableBundle();
-        bundle.putInt(BandConnectionJobServiceBETA.KEY_ACTION, BandConnectionJobServiceBETA.ACTION_CONNECT);
+        if (context.get() != null) {
+            JobScheduler jobScheduler = (JobScheduler) context.get().getSystemService(Context.JOB_SCHEDULER_SERVICE);
 
-        JobInfo.Builder builder = new JobInfo.Builder(1, new ComponentName(context.getPackageName(), BandConnectionJobServiceBETA.class.getName()));
-        builder.setExtras(bundle);
-        builder.setOverrideDeadline(10);
-        if (jobScheduler.schedule(builder.build()) <= 0) {
-            Log.d("BandConnectionService", "Connect Failed (Error Scheduling Job)");
-        }
-    }
+            PersistableBundle bundle = new PersistableBundle();
+            bundle.putInt(KEY_ACTION, ACTION_CONNECT);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+                bundle.putBoolean(KEY_ENABLE_HAPTIC_FEEDBACK, enableHapticFeedback);
+            }
 
-    public static void disconnect(Context context, JobScheduler jobScheduler) {
-        if (context == null || jobScheduler == null) {
-            Log.d("BandConnectionService", "Disconnect Failed (Connect called with invalid parameters)");
-            return;
-        }
-
-        PersistableBundle bundle = new PersistableBundle();
-        bundle.putInt(BandConnectionJobServiceBETA.KEY_ACTION, BandConnectionJobServiceBETA.ACTION_DISCONNECT);
-
-        JobInfo.Builder builder = new JobInfo.Builder(2, new ComponentName(context.getPackageName(), BandConnectionJobServiceBETA.class.getName()));
-        builder.setExtras(bundle);
-        builder.setOverrideDeadline(200);
-        if (jobScheduler.schedule(builder.build()) <= 0) {
-            Log.d("BandConnectionService", "Disconnect Failed (Error Scheduling Job)");
-        }
-    }
-
-    public static void startStream(Context context, JobScheduler jobScheduler, boolean isPeriodic, String[] sensorsToStream) {
-        if (context == null || jobScheduler == null) {
-            Log.d("BandConnectionService", "Start Stream Failed (Called with invalid parameters)");
-            return;
-        }
-
-        PersistableBundle bundle = new PersistableBundle();
-        bundle.putInt(BandConnectionJobServiceBETA.KEY_ACTION, BandConnectionJobServiceBETA.ACTION_START_STREAM);
-        bundle.putStringArray(KEY_SENSORS_TO_STREAM, sensorsToStream);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-            if (isPeriodic) {
-                bundle.putBoolean(KEY_SET_PERIODIC, true);
-            } else {
-                bundle.putBoolean(KEY_SET_PERIODIC, false);
+            JobInfo.Builder builder = new JobInfo.Builder(1, new ComponentName(context.get().getPackageName(), BandConnectionJobServiceBETA.class.getName()));
+            builder.setExtras(bundle);
+            builder.setOverrideDeadline(10);
+            if (jobScheduler.schedule(builder.build()) <= 0) {
+                Log.d("BandConnectionService", "Connect Call Failed (Error Scheduling Job)");
             }
         }
-
-        JobInfo.Builder builder = new JobInfo.Builder(3, new ComponentName(context.getPackageName(), BandConnectionJobServiceBETA.class.getName()));
-        builder.setExtras(bundle);
-        if (isPeriodic) {
-            builder.setPeriodic(60000);
-        } else {
-            builder.setOverrideDeadline(10);
-        }
-        if (jobScheduler.schedule(builder.build()) <= 0) {
-            Log.d("BandConnectionService", "Start Stream Failed (Error Scheduling Job)");
-        }
     }
 
-    public static void stopStream(Context context, JobScheduler jobScheduler) {
-        if (context == null || jobScheduler == null) {
-            Log.d("BandConnectionService", "Stop Stream Failed (Called with invalid parameters)");
+    public static void disconnect(WeakReference<Context> context) {
+        if (context == null) {
+            Log.d("BandConnectionService", "Disconnect Call Failed (Called with invalid parameters)");
             return;
         }
 
-        PersistableBundle bundle = new PersistableBundle();
-        bundle.putInt(BandConnectionJobServiceBETA.KEY_ACTION, BandConnectionJobServiceBETA.ACTION_START_STREAM);
+        if (context.get() != null) {
+            JobScheduler jobScheduler = (JobScheduler) context.get().getSystemService(JOB_SCHEDULER_SERVICE);
 
-        JobInfo.Builder builder = new JobInfo.Builder(4, new ComponentName(context.getPackageName(), BandConnectionJobServiceBETA.class.getName()));
-        builder.setExtras(bundle);
-        builder.setOverrideDeadline(10);
-        if (jobScheduler.schedule(builder.build()) <= 0) {
-            Log.d("BandConnectionService", "Stop Stream Failed (Error Scheduling Job)");
+            PersistableBundle bundle = new PersistableBundle();
+            bundle.putInt(KEY_ACTION, ACTION_DISCONNECT);
+
+            JobInfo.Builder builder = new JobInfo.Builder(2, new ComponentName(context.get().getPackageName(), BandConnectionJobServiceBETA.class.getName()));
+            builder.setExtras(bundle);
+            builder.setOverrideDeadline(200);
+            if (jobScheduler.schedule(builder.build()) <= 0) {
+                Log.d("BandConnectionService", "Disconnect Call Failed (Error Scheduling Job)");
+            }
+        }
+    }
+
+    public static void startStream(WeakReference<Context> context, boolean isPeriodic, String[] sensorsToStream) {
+        if (context == null) {
+            Log.d("BandConnectionService", "Start Stream Call Failed (Called with invalid parameters)");
+            return;
+        }
+
+        if (context.get() != null) {
+            JobScheduler jobScheduler = (JobScheduler) context.get().getSystemService(JOB_SCHEDULER_SERVICE);
+
+            PersistableBundle bundle = new PersistableBundle();
+            bundle.putInt(KEY_ACTION, ACTION_START_STREAM);
+            bundle.putStringArray(KEY_SENSORS_TO_STREAM, sensorsToStream);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+                if (isPeriodic) {
+                    bundle.putBoolean(KEY_SET_PERIODIC, true);
+                } else {
+                    bundle.putBoolean(KEY_SET_PERIODIC, false);
+                }
+            }
+
+            JobInfo.Builder builder = new JobInfo.Builder(3, new ComponentName(context.get().getPackageName(), BandConnectionJobServiceBETA.class.getName()));
+            builder.setExtras(bundle);
+            if (isPeriodic) {
+                builder.setPeriodic(60000);
+            } else {
+                builder.setOverrideDeadline(10);
+            }
+            if (jobScheduler.schedule(builder.build()) <= 0) {
+                Log.d("BandConnectionService", "Start Stream Call Failed (Error Scheduling Job)");
+            }
+        }
+    }
+
+    public static void stopStream(WeakReference<Context> context) {
+        if (context == null) {
+            Log.d("BandConnectionService", "Stop Stream Call Failed (Called with invalid parameters)");
+            return;
+        }
+
+        if (context.get() != null) {
+            JobScheduler jobScheduler = (JobScheduler) context.get().getSystemService(JOB_SCHEDULER_SERVICE);
+
+            PersistableBundle bundle = new PersistableBundle();
+            bundle.putInt(KEY_ACTION, ACTION_START_STREAM);
+
+            JobInfo.Builder builder = new JobInfo.Builder(4, new ComponentName(context.get().getPackageName(), BandConnectionJobServiceBETA.class.getName()));
+            builder.setExtras(bundle);
+            builder.setOverrideDeadline(10);
+            if (jobScheduler.schedule(builder.build()) <= 0) {
+                Log.d("BandConnectionService", "Stop Stream Call Failed (Error Scheduling Job)");
+            }
         }
     }
 
@@ -173,86 +210,21 @@ public class BandConnectionJobServiceBETA extends JobService {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
                         mEnableHapticFeedback = parameters.getExtras().getBoolean(KEY_ENABLE_HAPTIC_FEEDBACK, false);
                     }
-
-                    BandInfo[] pairedBands = mBandClientManager.getPairedBands();
-                    //For now, only 1 Band at a time is supported
-                    if (pairedBands == null || pairedBands.length < 1) {
-                        //Throw Exception NoPairedBands
-                        log("Please pair your Band via the Microsoft Band App first");
-                    } else {
-                        mBandClient = mBandClientManager.create(mContext, pairedBands[0]);
-                        mBandClient.connect().registerResultCallback(mBandConnectResultCallback);
-                        log("Connecting to Band...");
-                    }
+                    connect();
                     break;
                 case ACTION_DISCONNECT:
-                    if (mBandClient != null && mBandClient.isConnected()) {
-                        log("Disconnecting from Band...");
-                        mBandClient.disconnect().registerResultCallback(mBandDisconnectResultCallback);
-                    } else {
-                        log("Band is not Connected");
-                    }
+                    disconnect();
                     break;
                 case ACTION_START_STREAM:
-                    log("Starting Stream");
-                    if (mBandClient == null || !mBandClient.isConnected()) {
-                        log("Band is not Connected");
-                    } else {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-                            mIsPeriodic = parameters.getExtras().getBoolean(KEY_SET_PERIODIC, false);
-                        }
-
-                        mSensorsToStream = parameters.getExtras().getStringArray(KEY_SENSORS_TO_STREAM);
-
-                        BandSensorManager bandSensorManager = mBandClient.getSensorManager();
-                        try {
-                            //Edit this
-                            bandSensorManager.registerAccelerometerEventListener(mBandAccelerometerListener, SampleRate.MS128);
-                            bandSensorManager.registerAmbientLightEventListener(mBandAmbientLightListener);
-                            bandSensorManager.registerContactEventListener(mBandContactListener);
-                            bandSensorManager.registerGsrEventListener(mBandGsrListener, GsrSampleRate.MS200);
-                            bandSensorManager.registerHeartRateEventListener(mBandHeartRateListener);
-                            bandSensorManager.registerRRIntervalEventListener(mBandRRIntervalListener);
-                            bandSensorManager.registerSkinTemperatureEventListener(mBandSkinTemperatureListener);
-                        } catch (BandException | InvalidBandVersionException e) {
-                            e.printStackTrace();
-                        }
-
-                        updateNotification("Streaming");
-
-                        //Send Broadcast to BandStateUpdateReceivers
-                        Intent intent = new Intent(BandUpdateStateReceiver.INTENT_FILTER.getAction(0));
-                        intent.putExtra(BandUpdateStateReceiver.EXTRA_NEW_STATE, STATE_STREAMING);
-                        sendBroadcast(intent);
-
-                        if (mIsPeriodic) {
-                            mCountDownTimer.start();
-                        }
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+                        mIsPeriodic = parameters.getExtras().getBoolean(KEY_SET_PERIODIC, false);
                     }
+                    mSensorsToStream = parameters.getExtras().getStringArray(KEY_SENSORS_TO_STREAM);
+
+                    startStream();
                     break;
                 case ACTION_STOP_STREAM:
-                    if (mBandClient == null) {
-                        log("Band is not Connected");
-                    } else {
-                        BandSensorManager bandSensorManager = mBandClient.getSensorManager();
-                        try {
-                            //And this
-                            bandSensorManager.unregisterAccelerometerEventListener(mBandAccelerometerListener);
-                            bandSensorManager.unregisterAmbientLightEventListener(mBandAmbientLightListener);
-                            bandSensorManager.unregisterContactEventListener(mBandContactListener);
-                            bandSensorManager.unregisterGsrEventListener(mBandGsrListener);
-                            bandSensorManager.unregisterHeartRateEventListener(mBandHeartRateListener);
-                            bandSensorManager.unregisterRRIntervalEventListener(mBandRRIntervalListener);
-                            bandSensorManager.unregisterSkinTemperatureEventListener(mBandSkinTemperatureListener);
-                        } catch (BandIOException | IllegalArgumentException e) {
-                            e.printStackTrace();
-                        }
-
-                        //Send Broadcast to BandStateUpdateReceivers
-                        Intent intent = new Intent(BandUpdateStateReceiver.INTENT_FILTER.getAction(0));
-                        intent.putExtra(BandUpdateStateReceiver.EXTRA_NEW_STATE, STATE_CONNECTED);
-                        sendBroadcast(intent);
-                    }
+                    stopStream();
                     break;
                 case ACTION_REQUEST_BAND_INFO:
 
@@ -272,30 +244,7 @@ public class BandConnectionJobServiceBETA extends JobService {
 
         @Override
         public void onFinish() {
-            if (mBandClient == null) {
-                log("Band is not Connected");
-            } else {
-                BandSensorManager bandSensorManager = mBandClient.getSensorManager();
-                try {
-                    //And this
-                    bandSensorManager.unregisterAccelerometerEventListener(mBandAccelerometerListener);
-                    bandSensorManager.unregisterAmbientLightEventListener(mBandAmbientLightListener);
-                    bandSensorManager.unregisterContactEventListener(mBandContactListener);
-                    bandSensorManager.unregisterGsrEventListener(mBandGsrListener);
-                    bandSensorManager.unregisterHeartRateEventListener(mBandHeartRateListener);
-                    bandSensorManager.unregisterRRIntervalEventListener(mBandRRIntervalListener);
-                    bandSensorManager.unregisterSkinTemperatureEventListener(mBandSkinTemperatureListener);
-                } catch (BandIOException | IllegalArgumentException e) {
-                    e.printStackTrace();
-                }
-
-                updateNotification("Connected");
-
-                //Send Broadcast to BandStateUpdateReceivers
-                Intent intent = new Intent(BandUpdateStateReceiver.INTENT_FILTER.getAction(0));
-                intent.putExtra(BandUpdateStateReceiver.EXTRA_NEW_STATE, STATE_CONNECTED);
-                sendBroadcast(intent);
-            }
+            stopStream();
         }
     };
 
@@ -314,6 +263,8 @@ public class BandConnectionJobServiceBETA extends JobService {
         mBandHeartRateListener = new BandHeartRateListener(this);
         mBandRRIntervalListener = new BandRRIntervalListener(this);
         mBandSkinTemperatureListener = new BandSkinTemperatureListener(this);
+
+        registerReceiver(mBandContactStateReceiver, BandContactStateReceiver.INTENT_FILTER);
 
         //Declare as Foreground Service
         Notification notification = new Notification.Builder(this)
@@ -348,8 +299,158 @@ public class BandConnectionJobServiceBETA extends JobService {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         log("onDestroy()");
+        unregisterReceiver(mBandContactStateReceiver);
+
+        super.onDestroy();
+    }
+
+    private void connect() {
+        BandInfo[] pairedBands = mBandClientManager.getPairedBands();
+        //For now, only 1 Band at a time is supported
+        if (pairedBands == null || pairedBands.length < 1) {
+            //Throw Exception NoPairedBands
+            log("Please pair your Band via the Microsoft Band App first");
+        } else {
+            mBandClient = mBandClientManager.create(mContext, pairedBands[0]);
+            mBandClient.connect().registerResultCallback(mBandConnectResultCallback);
+            log("Connecting to Band...");
+        }
+    }
+
+    private void disconnect() {
+        if (mBandClient != null && mBandClient.isConnected()) {
+            log("Disconnecting from Band...");
+            mBandClient.disconnect().registerResultCallback(mBandDisconnectResultCallback);
+        } else {
+            log("Band is not Connected");
+        }
+    }
+
+    private void startStream() {
+        log("Starting Stream");
+
+        if (mBandClient == null || !mBandClient.isConnected()) {
+            log("Band is not Connected");
+        } else {
+            BandSensorManager bandSensorManager = mBandClient.getSensorManager();
+            try {
+                //Edit this
+                /*bandSensorManager.registerAccelerometerEventListener(mBandAccelerometerListener, SampleRate.MS128);
+                bandSensorManager.registerAmbientLightEventListener(mBandAmbientLightListener);
+                bandSensorManager.registerContactEventListener(mBandContactListener);
+                bandSensorManager.registerGsrEventListener(mBandGsrListener, GsrSampleRate.MS200);
+                bandSensorManager.registerHeartRateEventListener(mBandHeartRateListener);
+                bandSensorManager.registerRRIntervalEventListener(mBandRRIntervalListener);
+                bandSensorManager.registerSkinTemperatureEventListener(mBandSkinTemperatureListener);*/
+
+                if (mSensorsToStream == null || mSensorsToStream.length == 0) {
+                    log("No Sensors Selected!");
+                } else {
+                    for (String sensorName : mSensorsToStream) {
+                        switch (sensorName) {
+                            case SENSOR_ACCELEROMETER:
+                                bandSensorManager.registerAccelerometerEventListener(mBandAccelerometerListener, SampleRate.MS128);
+                                break;
+                            case SENSOR_ALTIMETER:
+                                //Implement this
+                                break;
+                            case SENSOR_AMBIENT_LIGHT:
+                                bandSensorManager.registerAmbientLightEventListener(mBandAmbientLightListener);
+                                break;
+                            case SENSOR_BAROMETER:
+                                //Implement this
+                                break;
+                            case SENSOR_CALORIES:
+                                //Implement this
+                                break;
+                            case SENSOR_CONTACT:
+                                bandSensorManager.registerContactEventListener(mBandContactListener);
+                                break;
+                            case SENSOR_DISTANCE:
+                                //Implement this
+                                break;
+                            case SENSOR_GSR:
+                                bandSensorManager.registerGsrEventListener(mBandGsrListener, GsrSampleRate.MS5000);
+                                break;
+                            case SENSOR_GYROSCOPE:
+                                //Implement this
+                                break;
+                            case SENSOR_HEART_RATE:
+                                bandSensorManager.registerHeartRateEventListener(mBandHeartRateListener);
+                                break;
+                            case SENSOR_PEDOMETER:
+                                //Implement this
+                                break;
+                            case SENSOR_RR_INTERVAL:
+                                bandSensorManager.registerRRIntervalEventListener(mBandRRIntervalListener);
+                                break;
+                            case SENSOR_SKIN_TEMPERATURE:
+                                bandSensorManager.registerSkinTemperatureEventListener(mBandSkinTemperatureListener);
+                                break;
+                            case SENSOR_UV:
+                                //Implement this
+                                break;
+                            default:
+                                log("Invalid Sensor Name!");
+                                break;
+                        }
+                    }
+                }
+            } catch (BandException | InvalidBandVersionException e) {
+                e.printStackTrace();
+            }
+
+            updateNotification("Streaming");
+
+            //Send Broadcast to BandStateUpdateReceivers
+            Intent intent = new Intent(BandUpdateStateReceiver.INTENT_FILTER.getAction(0));
+            intent.putExtra(BandUpdateStateReceiver.EXTRA_NEW_STATE, STATE_STREAMING);
+            sendBroadcast(intent);
+
+            if (mIsPeriodic) {
+                mCountDownTimer.start();
+            }
+        }
+    }
+
+    private void stopStream() {
+        if (mBandClient == null) {
+            log("Band is not Connected");
+        } else {
+            BandSensorManager bandSensorManager = mBandClient.getSensorManager();
+            try {
+                //And this
+                /*bandSensorManager.unregisterAccelerometerEventListener(mBandAccelerometerListener);
+                bandSensorManager.unregisterAmbientLightEventListener(mBandAmbientLightListener);
+                bandSensorManager.unregisterContactEventListener(mBandContactListener);
+                bandSensorManager.unregisterGsrEventListener(mBandGsrListener);
+                bandSensorManager.unregisterHeartRateEventListener(mBandHeartRateListener);
+                bandSensorManager.unregisterRRIntervalEventListener(mBandRRIntervalListener);
+                bandSensorManager.unregisterSkinTemperatureEventListener(mBandSkinTemperatureListener);*/
+                bandSensorManager.unregisterAllListeners();
+            } catch (BandIOException | IllegalArgumentException e) {
+                e.printStackTrace();
+            }
+
+            //Send Broadcast to BandStateUpdateReceivers
+            Intent intent = new Intent(BandUpdateStateReceiver.INTENT_FILTER.getAction(0));
+            intent.putExtra(BandUpdateStateReceiver.EXTRA_NEW_STATE, STATE_CONNECTED);
+            sendBroadcast(intent);
+        }
+    }
+
+    private void vibrateBand(VibrationType vibrationType) {
+        if (mBandClient == null || !mBandClient.isConnected()) {
+            //Throw Exception
+            log("Band is not Connected");
+        } else {
+            try {
+                mBandClient.getNotificationManager().vibrate(vibrationType);
+            } catch (BandException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void updateNotification(String status) {
@@ -376,6 +477,11 @@ public class BandConnectionJobServiceBETA extends JobService {
                 log("Band is Connected");
 
                 updateNotification("Connected");
+
+                //Provide Haptic Feedback
+                if (mEnableHapticFeedback) {
+                    vibrateBand(VibrationType.RAMP_UP);
+                }
 
                 //Send Broadcast to BandStateUpdateReceivers
                 Intent intent = new Intent(BandUpdateStateReceiver.INTENT_FILTER.getAction(0));
@@ -433,10 +539,17 @@ public class BandConnectionJobServiceBETA extends JobService {
 
             updateNotification("Disconnected");
 
+            //Provide Haptic Feedback
+            if (mEnableHapticFeedback) {
+                vibrateBand(VibrationType.RAMP_DOWN);
+            }
+
             //Send Broadcast to BandStateUpdateReceivers
             Intent intent = new Intent(BandUpdateStateReceiver.INTENT_FILTER.getAction(0));
             intent.putExtra(BandUpdateStateReceiver.EXTRA_NEW_STATE, STATE_DISCONNECTED);
             sendBroadcast(intent);
+
+            stopSelf();
         }
     };
 

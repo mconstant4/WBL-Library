@@ -14,9 +14,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import wbl.egr.uri.library.band.BandApplication;
 import wbl.egr.uri.library.band.receivers.BandContactStateReceiver;
 import wbl.egr.uri.library.band.receivers.BandUpdateStateReceiver;
 import wbl.egr.uri.library.band.services.BandConnectionJobServiceBETA;
+import wbl.egr.uri.library.io.services.DataLogService;
 
 
 /**
@@ -39,7 +41,7 @@ public class BandContactListener implements BandContactEventListener {
         String timeString = new SimpleDateFormat("hh:mm:ss.SSS", Locale.US).format(date);
         String data = dateString + "," + timeString + "," +
                 bandContactEvent.getContactState();
-        //DataLogService.log(mContext, new File(MainActivity.getRootFile(mContext), "contact.csv"), data, HEADER);
+        DataLogService.log(mContext, new File(BandApplication.ROOT_DIR, "contact.csv"), data, HEADER);
 
         //Broadcast Update
         Intent intent = new Intent(BandUpdateStateReceiver.INTENT_FILTER.getAction(0));

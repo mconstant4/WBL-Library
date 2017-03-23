@@ -12,6 +12,7 @@ import android.util.Log;
 
 import java.lang.ref.WeakReference;
 
+import wbl.egr.uri.library.band.models.SensorModel;
 import wbl.egr.uri.library.band.receivers.BandUpdateStateReceiver;
 import wbl.egr.uri.library.band.services.BandConnectionJobServiceBETA;
 import wbl.egr.uri.library.band.tasks.RequestHeartRateTask;
@@ -22,7 +23,7 @@ import wbl.egr.uri.library.band.tasks.RequestHeartRateTask;
 
 public class SettingsActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
     private SharedPreferences mSharedPreferences;
-    private Context mContext;
+    private WeakReference<Context> mContext;
     private JobScheduler mJobScheduler;
 
     private BandUpdateStateReceiver mBandUpdateStateReceiver = new BandUpdateStateReceiver() {
@@ -31,8 +32,8 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
             switch (intent.getIntExtra(BandUpdateStateReceiver.EXTRA_NEW_STATE, -1)) {
                 case BandConnectionJobServiceBETA.STATE_CONNECTED:
                     log("Connected");
-                    String[] sensors = {};
-                    BandConnectionJobServiceBETA.startStream(mContext, mJobScheduler, true, sensors);
+                    String[] sensors = {SensorModel.SENSOR_ACCELEROMETER};
+                    BandConnectionJobServiceBETA.startStream(mContext, false, sensors);
                     break;
                 case BandConnectionJobServiceBETA.STATE_DISCONNECTED:
                     log("Disconnected");
@@ -55,12 +56,11 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
-        mContext = this;
+        mContext = new WeakReference<Context>(this);
 
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext.get());
         mSharedPreferences.registerOnSharedPreferenceChangeListener(this);
 
-        startService(new Intent(this, BandConnectionJobServiceBETA.class));
         registerReceiver(mBandUpdateStateReceiver, BandUpdateStateReceiver.INTENT_FILTER);
         mJobScheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
     }
@@ -70,6 +70,7 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         mSharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
         unregisterReceiver(mBandUpdateStateReceiver);
         mJobScheduler.cancelAll();
+        mContext.clear();
         super.onDestroy();
     }
 
@@ -78,12 +79,12 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         switch (key) {
             case "pref_enable_band_collection":
                 if (sharedPreferences.getBoolean(key, false)) {
+                    startService(new Intent(this, BandConnectionJobServiceBETA.class));
                     new RequestHeartRateTask().execute(new WeakReference<Activity>(this));
-                    BandConnectionJobServiceBETA.connect(this, mJobScheduler, true);
+                    BandConnectionJobServiceBETA.connect(mContext, true);
                 } else {
-                    BandConnectionJobServiceBETA.stopStream(this, mJobScheduler);
-                    BandConnectionJobServiceBETA.disconnect(this, mJobScheduler);
-                    //stopService(new Intent(this, BandConnectionJobServiceBETA.class));
+                    BandConnectionJobServiceBETA.stopStream(mContext);
+                    BandConnectionJobServiceBETA.disconnect(mContext);
                 }
                 break;
         }

@@ -14,6 +14,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import wbl.egr.uri.library.band.BandApplication;
+import wbl.egr.uri.library.io.services.DataLogService;
+
 /**
  * Created by mconstant on 2/22/17.
  */
@@ -36,7 +39,7 @@ public class BandHeartRateListener implements BandHeartRateEventListener {
         String data = dateString + "," + timeString + "," +
                 bandHeartRateEvent.getHeartRate() + "," +
                 bandHeartRateEvent.getQuality();
-        //DataLogService.log(mContext, new File(MainActivity.getRootFile(mContext), "/hr.csv"), data, HEADER);
+        DataLogService.log(mContext, new File(BandApplication.ROOT_DIR, "/hr.csv"), data, HEADER);
 
         if (bandHeartRateEvent.getHeartRate() > 100 && bandHeartRateEvent.getQuality().name().equals(HeartRateQuality.LOCKED.name())) {
            // AudioRecordManager.start(mContext, AudioRecordManager.ACTION_AUDIO_TRIGGER);

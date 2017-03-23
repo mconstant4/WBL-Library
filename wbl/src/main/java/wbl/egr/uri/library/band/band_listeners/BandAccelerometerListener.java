@@ -12,6 +12,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import wbl.egr.uri.library.band.BandApplication;
+import wbl.egr.uri.library.io.services.DataLogService;
+
 /**
  * Created by mconstant on 2/22/17.
  */
@@ -34,6 +37,6 @@ public class BandAccelerometerListener implements BandAccelerometerEventListener
                 (bandAccelerometerEvent.getAccelerationX() * (long)9.81) + "," +
                 (bandAccelerometerEvent.getAccelerationY() * (long)9.81) + "," +
                 (bandAccelerometerEvent.getAccelerationZ() * (long)9.81);
-        //DataLogService.log(mContext, new File(MainActivity.getRootFile(mContext), "/acc.csv"), data, HEADER);
+        DataLogService.log(mContext, new File(BandApplication.ROOT_DIR, "/acc.csv"), data, HEADER);
     }
 }

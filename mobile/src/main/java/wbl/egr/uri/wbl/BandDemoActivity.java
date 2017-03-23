@@ -83,7 +83,7 @@ public class BandDemoActivity extends AppCompatActivity {
                 case BandConnectionJobServiceBETA.STATE_CONNECTED:
                     log("Connected");
                     String[] sensors = {};
-                    BandConnectionJobServiceBETA.startStream(mContext, mJobScheduler, true, sensors);
+                    BandConnectionJobServiceBETA.startStream(new WeakReference<Context>(mContext), true, sensors);
                     break;
                 case BandConnectionJobServiceBETA.STATE_DISCONNECTED:
                     log("Disconnected");
@@ -116,13 +116,13 @@ public class BandDemoActivity extends AppCompatActivity {
 
         mContext = this;
 
-        BandConnectionJobServiceBETA.connect(this, mJobScheduler, true);
+        BandConnectionJobServiceBETA.connect(new WeakReference<Context>(mContext), true);
     }
 
     @Override
     protected void onDestroy() {
-        BandConnectionJobServiceBETA.stopStream(mContext, mJobScheduler);
-        BandConnectionJobServiceBETA.disconnect(mContext, mJobScheduler);
+        BandConnectionJobServiceBETA.stopStream(new WeakReference<Context>(mContext));
+        BandConnectionJobServiceBETA.disconnect(new WeakReference<Context>(mContext));
         unregisterReceiver(mBandUpdateStateReceiver);
         mJobScheduler.cancelAll();
         stopService(new Intent(this, BandConnectionJobServiceBETA.class));

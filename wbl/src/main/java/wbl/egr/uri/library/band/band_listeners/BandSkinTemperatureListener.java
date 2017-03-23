@@ -11,6 +11,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import wbl.egr.uri.library.band.BandApplication;
+import wbl.egr.uri.library.io.services.DataLogService;
+
 /**
  * Created by mconstant on 2/22/17.
  */
@@ -31,6 +34,6 @@ public class BandSkinTemperatureListener implements BandSkinTemperatureEventList
         String timeString = new SimpleDateFormat("hh:mm:ss.SSS", Locale.US).format(date);
         String data = dateString + "," + timeString + "," +
                 bandSkinTemperatureEvent.getTemperature();
-        //DataLogService.log(mContext, new File(MainActivity.getRootFile(mContext), "temp.csv"), data, HEADER);
+        DataLogService.log(mContext, new File(BandApplication.ROOT_DIR, "temp.csv"), data, HEADER);
     }
 }

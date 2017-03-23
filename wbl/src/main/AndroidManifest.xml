@@ -16,6 +16,8 @@
         <service android:name=".band.services.BandConnectionJobServiceBETA"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
+        <service android:name=".io.services.DataLogService"/>
+
     </application>
 
 </manifest>

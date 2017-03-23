@@ -1,50 +1,50 @@
 The target system is: Android - 21 - i686
-The host system is: Linux - 4.8.0-41-generic - x86_64
+The host system is: Linux - 4.4.0-66-generic - x86_64
 Determining if the C compiler works passed with the following output:
-Change Dir: /home/mconstant/Documents/WBL/apps/WBL_Library/mobile/.externalNativeBuild/cmake/release/x86/CMakeFiles/CMakeTmp
+Change Dir: /home/mconstant/Documents/WBL/WBLLibrary/mobile/.externalNativeBuild/cmake/release/x86/CMakeFiles/CMakeTmp
 
-Run Build Command:"/root/Android/Sdk/cmake/3.6.3155560/bin/ninja" "cmTC_a3a08"
-[1/2] Building C object CMakeFiles/cmTC_a3a08.dir/testCCompiler.c.o
-[2/2] Linking C executable cmTC_a3a08
+Run Build Command:"/home/mconstant/Android/Sdk/cmake/3.6.3155560/bin/ninja" "cmTC_f64c9"
+[1/2] Building C object CMakeFiles/cmTC_f64c9.dir/testCCompiler.c.o
+[2/2] Linking C executable cmTC_f64c9
 
 
 Detecting C compiler ABI info compiled with the following output:
-Change Dir: /home/mconstant/Documents/WBL/apps/WBL_Library/mobile/.externalNativeBuild/cmake/release/x86/CMakeFiles/CMakeTmp
+Change Dir: /home/mconstant/Documents/WBL/WBLLibrary/mobile/.externalNativeBuild/cmake/release/x86/CMakeFiles/CMakeTmp
 
-Run Build Command:"/root/Android/Sdk/cmake/3.6.3155560/bin/ninja" "cmTC_f00ca"
-[1/2] Building C object CMakeFiles/cmTC_f00ca.dir/CMakeCCompilerABI.c.o
-[2/2] Linking C executable cmTC_f00ca
+Run Build Command:"/home/mconstant/Android/Sdk/cmake/3.6.3155560/bin/ninja" "cmTC_7dd95"
+[1/2] Building C object CMakeFiles/cmTC_7dd95.dir/CMakeCCompilerABI.c.o
+[2/2] Linking C executable cmTC_7dd95
 Android clang version 3.8.275480  (based on LLVM 3.8.275480)
 Target: i686-none-linux-android
 Thread model: posix
-InstalledDir: /root/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin
-Found candidate GCC installation: /root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x
-Selected GCC installation: /root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x
+InstalledDir: /home/mconstant/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin
+Found candidate GCC installation: /home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x
+Selected GCC installation: /home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x
 Candidate multilib: .;@m32
 Selected multilib: .;@m32
- "/root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x/../../../../i686-linux-android/bin/ld" --sysroot=/root/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86 -pie -z relro --eh-frame-hdr -m elf_i386 -dynamic-linker /system/bin/linker -o cmTC_f00ca /root/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib/crtbegin_dynamic.o -L/root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x -L/root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x/../../../../i686-linux-android/lib -L/root/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib --build-id --warn-shared-textrel --fatal-warnings --no-undefined -z noexecstack -z relro -z now --gc-sections -z nocopyreloc --build-id --warn-shared-textrel --fatal-warnings --no-undefined -z noexecstack -z relro -z now --gc-sections -z nocopyreloc CMakeFiles/cmTC_f00ca.dir/CMakeCCompilerABI.c.o -lgcc -ldl -lc -lgcc -ldl /root/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib/crtend_android.o
+ "/home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x/../../../../i686-linux-android/bin/ld" --sysroot=/home/mconstant/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86 -pie -z relro --eh-frame-hdr -m elf_i386 -dynamic-linker /system/bin/linker -o cmTC_7dd95 /home/mconstant/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib/crtbegin_dynamic.o -L/home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x -L/home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x/../../../../i686-linux-android/lib -L/home/mconstant/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib --build-id --warn-shared-textrel --fatal-warnings --no-undefined -z noexecstack -z relro -z now --gc-sections -z nocopyreloc --build-id --warn-shared-textrel --fatal-warnings --no-undefined -z noexecstack -z relro -z now --gc-sections -z nocopyreloc CMakeFiles/cmTC_7dd95.dir/CMakeCCompilerABI.c.o -lgcc -ldl -lc -lgcc -ldl /home/mconstant/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib/crtend_android.o
 
 
 Parsed C implicit link information from above output:
   link line regex: [^( *|.*[/\])(i686-linux-android-ld|([^/\]+-)?ld|collect2)[^/\]*( |$)]
-  ignore line: [Change Dir: /home/mconstant/Documents/WBL/apps/WBL_Library/mobile/.externalNativeBuild/cmake/release/x86/CMakeFiles/CMakeTmp]
+  ignore line: [Change Dir: /home/mconstant/Documents/WBL/WBLLibrary/mobile/.externalNativeBuild/cmake/release/x86/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:"/root/Android/Sdk/cmake/3.6.3155560/bin/ninja" "cmTC_f00ca"]
-  ignore line: [[1/2] Building C object CMakeFiles/cmTC_f00ca.dir/CMakeCCompilerABI.c.o]
-  ignore line: [[2/2] Linking C executable cmTC_f00ca]
+  ignore line: [Run Build Command:"/home/mconstant/Android/Sdk/cmake/3.6.3155560/bin/ninja" "cmTC_7dd95"]
+  ignore line: [[1/2] Building C object CMakeFiles/cmTC_7dd95.dir/CMakeCCompilerABI.c.o]
+  ignore line: [[2/2] Linking C executable cmTC_7dd95]
   ignore line: [Android clang version 3.8.275480  (based on LLVM 3.8.275480)]
   ignore line: [Target: i686-none-linux-android]
   ignore line: [Thread model: posix]
-  ignore line: [InstalledDir: /root/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin]
-  ignore line: [Found candidate GCC installation: /root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x]
-  ignore line: [Selected GCC installation: /root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x]
+  ignore line: [InstalledDir: /home/mconstant/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin]
+  ignore line: [Found candidate GCC installation: /home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x]
+  ignore line: [Selected GCC installation: /home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x]
   ignore line: [Candidate multilib: .]
   ignore line: [@m32]
   ignore line: [Selected multilib: .]
   ignore line: [@m32]
-  link line: [ "/root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x/../../../../i686-linux-android/bin/ld" --sysroot=/root/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86 -pie -z relro --eh-frame-hdr -m elf_i386 -dynamic-linker /system/bin/linker -o cmTC_f00ca /root/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib/crtbegin_dynamic.o -L/root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x -L/root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x/../../../../i686-linux-android/lib -L/root/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib --build-id --warn-shared-textrel --fatal-warnings --no-undefined -z noexecstack -z relro -z now --gc-sections -z nocopyreloc --build-id --warn-shared-textrel --fatal-warnings --no-undefined -z noexecstack -z relro -z now --gc-sections -z nocopyreloc CMakeFiles/cmTC_f00ca.dir/CMakeCCompilerABI.c.o -lgcc -ldl -lc -lgcc -ldl /root/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib/crtend_android.o]
-    arg [/root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x/../../../../i686-linux-android/bin/ld] ==> ignore
-    arg [--sysroot=/root/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86] ==> ignore
+  link line: [ "/home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x/../../../../i686-linux-android/bin/ld" --sysroot=/home/mconstant/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86 -pie -z relro --eh-frame-hdr -m elf_i386 -dynamic-linker /system/bin/linker -o cmTC_7dd95 /home/mconstant/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib/crtbegin_dynamic.o -L/home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x -L/home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x/../../../../i686-linux-android/lib -L/home/mconstant/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib --build-id --warn-shared-textrel --fatal-warnings --no-undefined -z noexecstack -z relro -z now --gc-sections -z nocopyreloc --build-id --warn-shared-textrel --fatal-warnings --no-undefined -z noexecstack -z relro -z now --gc-sections -z nocopyreloc CMakeFiles/cmTC_7dd95.dir/CMakeCCompilerABI.c.o -lgcc -ldl -lc -lgcc -ldl /home/mconstant/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib/crtend_android.o]
+    arg [/home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x/../../../../i686-linux-android/bin/ld] ==> ignore
+    arg [--sysroot=/home/mconstant/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86] ==> ignore
     arg [-pie] ==> ignore
     arg [-zrelro] ==> ignore
     arg [--eh-frame-hdr] ==> ignore
@@ -53,11 +53,11 @@ Parsed C implicit link information from above output:
     arg [-dynamic-linker] ==> ignore
     arg [/system/bin/linker] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_f00ca] ==> ignore
-    arg [/root/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib/crtbegin_dynamic.o] ==> ignore
-    arg [-L/root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x] ==> dir [/root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x]
-    arg [-L/root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x/../../../../i686-linux-android/lib] ==> dir [/root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x/../../../../i686-linux-android/lib]
-    arg [-L/root/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib] ==> dir [/root/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib]
+    arg [cmTC_7dd95] ==> ignore
+    arg [/home/mconstant/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib/crtbegin_dynamic.o] ==> ignore
+    arg [-L/home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x] ==> dir [/home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x]
+    arg [-L/home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x/../../../../i686-linux-android/lib] ==> dir [/home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x/../../../../i686-linux-android/lib]
+    arg [-L/home/mconstant/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib] ==> dir [/home/mconstant/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib]
     arg [--build-id] ==> ignore
     arg [--warn-shared-textrel] ==> ignore
     arg [--fatal-warnings] ==> ignore
@@ -76,31 +76,31 @@ Parsed C implicit link information from above output:
     arg [-znow] ==> ignore
     arg [--gc-sections] ==> ignore
     arg [-znocopyreloc] ==> ignore
-    arg [CMakeFiles/cmTC_f00ca.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [CMakeFiles/cmTC_7dd95.dir/CMakeCCompilerABI.c.o] ==> ignore
     arg [-lgcc] ==> lib [gcc]
     arg [-ldl] ==> lib [dl]
     arg [-lc] ==> lib [c]
     arg [-lgcc] ==> lib [gcc]
     arg [-ldl] ==> lib [dl]
-    arg [/root/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib/crtend_android.o] ==> ignore
+    arg [/home/mconstant/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib/crtend_android.o] ==> ignore
   remove lib [gcc]
   remove lib [gcc]
-  collapse library dir [/root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x] ==> [/root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x]
-  collapse library dir [/root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x/../../../../i686-linux-android/lib] ==> [/root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/i686-linux-android/lib]
-  collapse library dir [/root/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib] ==> [/root/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib]
+  collapse library dir [/home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x] ==> [/home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x]
+  collapse library dir [/home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x/../../../../i686-linux-android/lib] ==> [/home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/i686-linux-android/lib]
+  collapse library dir [/home/mconstant/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib] ==> [/home/mconstant/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib]
   implicit libs: [dl;c;dl]
-  implicit dirs: [/root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x;/root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/i686-linux-android/lib;/root/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib]
+  implicit dirs: [/home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x;/home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/i686-linux-android/lib;/home/mconstant/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib]
   implicit fwks: []
 
 
 
 
 Detecting C [-std=c11] compiler features compiled with the following output:
-Change Dir: /home/mconstant/Documents/WBL/apps/WBL_Library/mobile/.externalNativeBuild/cmake/release/x86/CMakeFiles/CMakeTmp
+Change Dir: /home/mconstant/Documents/WBL/WBLLibrary/mobile/.externalNativeBuild/cmake/release/x86/CMakeFiles/CMakeTmp
 
-Run Build Command:"/root/Android/Sdk/cmake/3.6.3155560/bin/ninja" "cmTC_6666a"
-[1/2] Building C object CMakeFiles/cmTC_6666a.dir/feature_tests.c.o
-[2/2] Linking C executable cmTC_6666a
+Run Build Command:"/home/mconstant/Android/Sdk/cmake/3.6.3155560/bin/ninja" "cmTC_2b116"
+[1/2] Building C object CMakeFiles/cmTC_2b116.dir/feature_tests.c.o
+[2/2] Linking C executable cmTC_2b116
 
 
     Feature record: C_FEATURE:1c_function_prototypes
@@ -110,11 +110,11 @@ Run Build Command:"/root/Android/Sdk/cmake/3.6.3155560/bin/ninja" "cmTC_6666a"
 
 
 Detecting C [-std=c99] compiler features compiled with the following output:
-Change Dir: /home/mconstant/Documents/WBL/apps/WBL_Library/mobile/.externalNativeBuild/cmake/release/x86/CMakeFiles/CMakeTmp
+Change Dir: /home/mconstant/Documents/WBL/WBLLibrary/mobile/.externalNativeBuild/cmake/release/x86/CMakeFiles/CMakeTmp
 
-Run Build Command:"/root/Android/Sdk/cmake/3.6.3155560/bin/ninja" "cmTC_6984a"
-[1/2] Building C object CMakeFiles/cmTC_6984a.dir/feature_tests.c.o
-[2/2] Linking C executable cmTC_6984a
+Run Build Command:"/home/mconstant/Android/Sdk/cmake/3.6.3155560/bin/ninja" "cmTC_b05e9"
+[1/2] Building C object CMakeFiles/cmTC_b05e9.dir/feature_tests.c.o
+[2/2] Linking C executable cmTC_b05e9
 
 
     Feature record: C_FEATURE:1c_function_prototypes
@@ -124,11 +124,11 @@ Run Build Command:"/root/Android/Sdk/cmake/3.6.3155560/bin/ninja" "cmTC_6984a"
 
 
 Detecting C [-std=c90] compiler features compiled with the following output:
-Change Dir: /home/mconstant/Documents/WBL/apps/WBL_Library/mobile/.externalNativeBuild/cmake/release/x86/CMakeFiles/CMakeTmp
+Change Dir: /home/mconstant/Documents/WBL/WBLLibrary/mobile/.externalNativeBuild/cmake/release/x86/CMakeFiles/CMakeTmp
 
-Run Build Command:"/root/Android/Sdk/cmake/3.6.3155560/bin/ninja" "cmTC_df03a"
-[1/2] Building C object CMakeFiles/cmTC_df03a.dir/feature_tests.c.o
-[2/2] Linking C executable cmTC_df03a
+Run Build Command:"/home/mconstant/Android/Sdk/cmake/3.6.3155560/bin/ninja" "cmTC_ed3fa"
+[1/2] Building C object CMakeFiles/cmTC_ed3fa.dir/feature_tests.c.o
+[2/2] Linking C executable cmTC_ed3fa
 
 
     Feature record: C_FEATURE:1c_function_prototypes
@@ -136,50 +136,50 @@ Run Build Command:"/root/Android/Sdk/cmake/3.6.3155560/bin/ninja" "cmTC_df03a"
     Feature record: C_FEATURE:0c_static_assert
     Feature record: C_FEATURE:0c_variadic_macros
 Determining if the CXX compiler works passed with the following output:
-Change Dir: /home/mconstant/Documents/WBL/apps/WBL_Library/mobile/.externalNativeBuild/cmake/release/x86/CMakeFiles/CMakeTmp
+Change Dir: /home/mconstant/Documents/WBL/WBLLibrary/mobile/.externalNativeBuild/cmake/release/x86/CMakeFiles/CMakeTmp
 
-Run Build Command:"/root/Android/Sdk/cmake/3.6.3155560/bin/ninja" "cmTC_b54e0"
-[1/2] Building CXX object CMakeFiles/cmTC_b54e0.dir/testCXXCompiler.cxx.o
-[2/2] Linking CXX executable cmTC_b54e0
+Run Build Command:"/home/mconstant/Android/Sdk/cmake/3.6.3155560/bin/ninja" "cmTC_f235e"
+[1/2] Building CXX object CMakeFiles/cmTC_f235e.dir/testCXXCompiler.cxx.o
+[2/2] Linking CXX executable cmTC_f235e
 
 
 Detecting CXX compiler ABI info compiled with the following output:
-Change Dir: /home/mconstant/Documents/WBL/apps/WBL_Library/mobile/.externalNativeBuild/cmake/release/x86/CMakeFiles/CMakeTmp
+Change Dir: /home/mconstant/Documents/WBL/WBLLibrary/mobile/.externalNativeBuild/cmake/release/x86/CMakeFiles/CMakeTmp
 
-Run Build Command:"/root/Android/Sdk/cmake/3.6.3155560/bin/ninja" "cmTC_d3952"
-[1/2] Building CXX object CMakeFiles/cmTC_d3952.dir/CMakeCXXCompilerABI.cpp.o
-[2/2] Linking CXX executable cmTC_d3952
+Run Build Command:"/home/mconstant/Android/Sdk/cmake/3.6.3155560/bin/ninja" "cmTC_49e4a"
+[1/2] Building CXX object CMakeFiles/cmTC_49e4a.dir/CMakeCXXCompilerABI.cpp.o
+[2/2] Linking CXX executable cmTC_49e4a
 Android clang version 3.8.275480  (based on LLVM 3.8.275480)
 Target: i686-none-linux-android
 Thread model: posix
-InstalledDir: /root/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin
-Found candidate GCC installation: /root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x
-Selected GCC installation: /root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x
+InstalledDir: /home/mconstant/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin
+Found candidate GCC installation: /home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x
+Selected GCC installation: /home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x
 Candidate multilib: .;@m32
 Selected multilib: .;@m32
- "/root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x/../../../../i686-linux-android/bin/ld" --sysroot=/root/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86 -pie -z relro --eh-frame-hdr -m elf_i386 -dynamic-linker /system/bin/linker -o cmTC_d3952 /root/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib/crtbegin_dynamic.o -L/root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x -L/root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x/../../../../i686-linux-android/lib -L/root/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib --build-id --warn-shared-textrel --fatal-warnings --no-undefined -z noexecstack -z relro -z now --gc-sections -z nocopyreloc --build-id --warn-shared-textrel --fatal-warnings --no-undefined -z noexecstack -z relro -z now --gc-sections -z nocopyreloc CMakeFiles/cmTC_d3952.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc -lgcc -ldl -lc -lgcc -lgcc -ldl /root/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib/crtend_android.o
+ "/home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x/../../../../i686-linux-android/bin/ld" --sysroot=/home/mconstant/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86 -pie -z relro --eh-frame-hdr -m elf_i386 -dynamic-linker /system/bin/linker -o cmTC_49e4a /home/mconstant/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib/crtbegin_dynamic.o -L/home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x -L/home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x/../../../../i686-linux-android/lib -L/home/mconstant/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib --build-id --warn-shared-textrel --fatal-warnings --no-undefined -z noexecstack -z relro -z now --gc-sections -z nocopyreloc --build-id --warn-shared-textrel --fatal-warnings --no-undefined -z noexecstack -z relro -z now --gc-sections -z nocopyreloc CMakeFiles/cmTC_49e4a.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc -lgcc -ldl -lc -lgcc -lgcc -ldl /home/mconstant/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib/crtend_android.o
 
 
 Parsed CXX implicit link information from above output:
   link line regex: [^( *|.*[/\])(i686-linux-android-ld|([^/\]+-)?ld|collect2)[^/\]*( |$)]
-  ignore line: [Change Dir: /home/mconstant/Documents/WBL/apps/WBL_Library/mobile/.externalNativeBuild/cmake/release/x86/CMakeFiles/CMakeTmp]
+  ignore line: [Change Dir: /home/mconstant/Documents/WBL/WBLLibrary/mobile/.externalNativeBuild/cmake/release/x86/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:"/root/Android/Sdk/cmake/3.6.3155560/bin/ninja" "cmTC_d3952"]
-  ignore line: [[1/2] Building CXX object CMakeFiles/cmTC_d3952.dir/CMakeCXXCompilerABI.cpp.o]
-  ignore line: [[2/2] Linking CXX executable cmTC_d3952]
+  ignore line: [Run Build Command:"/home/mconstant/Android/Sdk/cmake/3.6.3155560/bin/ninja" "cmTC_49e4a"]
+  ignore line: [[1/2] Building CXX object CMakeFiles/cmTC_49e4a.dir/CMakeCXXCompilerABI.cpp.o]
+  ignore line: [[2/2] Linking CXX executable cmTC_49e4a]
   ignore line: [Android clang version 3.8.275480  (based on LLVM 3.8.275480)]
   ignore line: [Target: i686-none-linux-android]
   ignore line: [Thread model: posix]
-  ignore line: [InstalledDir: /root/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin]
-  ignore line: [Found candidate GCC installation: /root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x]
-  ignore line: [Selected GCC installation: /root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x]
+  ignore line: [InstalledDir: /home/mconstant/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin]
+  ignore line: [Found candidate GCC installation: /home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x]
+  ignore line: [Selected GCC installation: /home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x]
   ignore line: [Candidate multilib: .]
   ignore line: [@m32]
   ignore line: [Selected multilib: .]
   ignore line: [@m32]
-  link line: [ "/root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x/../../../../i686-linux-android/bin/ld" --sysroot=/root/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86 -pie -z relro --eh-frame-hdr -m elf_i386 -dynamic-linker /system/bin/linker -o cmTC_d3952 /root/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib/crtbegin_dynamic.o -L/root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x -L/root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x/../../../../i686-linux-android/lib -L/root/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib --build-id --warn-shared-textrel --fatal-warnings --no-undefined -z noexecstack -z relro -z now --gc-sections -z nocopyreloc --build-id --warn-shared-textrel --fatal-warnings --no-undefined -z noexecstack -z relro -z now --gc-sections -z nocopyreloc CMakeFiles/cmTC_d3952.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc -lgcc -ldl -lc -lgcc -lgcc -ldl /root/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib/crtend_android.o]
-    arg [/root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x/../../../../i686-linux-android/bin/ld] ==> ignore
-    arg [--sysroot=/root/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86] ==> ignore
+  link line: [ "/home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x/../../../../i686-linux-android/bin/ld" --sysroot=/home/mconstant/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86 -pie -z relro --eh-frame-hdr -m elf_i386 -dynamic-linker /system/bin/linker -o cmTC_49e4a /home/mconstant/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib/crtbegin_dynamic.o -L/home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x -L/home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x/../../../../i686-linux-android/lib -L/home/mconstant/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib --build-id --warn-shared-textrel --fatal-warnings --no-undefined -z noexecstack -z relro -z now --gc-sections -z nocopyreloc --build-id --warn-shared-textrel --fatal-warnings --no-undefined -z noexecstack -z relro -z now --gc-sections -z nocopyreloc CMakeFiles/cmTC_49e4a.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc -lgcc -ldl -lc -lgcc -lgcc -ldl /home/mconstant/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib/crtend_android.o]
+    arg [/home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x/../../../../i686-linux-android/bin/ld] ==> ignore
+    arg [--sysroot=/home/mconstant/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86] ==> ignore
     arg [-pie] ==> ignore
     arg [-zrelro] ==> ignore
     arg [--eh-frame-hdr] ==> ignore
@@ -188,11 +188,11 @@ Parsed CXX implicit link information from above output:
     arg [-dynamic-linker] ==> ignore
     arg [/system/bin/linker] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_d3952] ==> ignore
-    arg [/root/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib/crtbegin_dynamic.o] ==> ignore
-    arg [-L/root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x] ==> dir [/root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x]
-    arg [-L/root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x/../../../../i686-linux-android/lib] ==> dir [/root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x/../../../../i686-linux-android/lib]
-    arg [-L/root/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib] ==> dir [/root/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib]
+    arg [cmTC_49e4a] ==> ignore
+    arg [/home/mconstant/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib/crtbegin_dynamic.o] ==> ignore
+    arg [-L/home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x] ==> dir [/home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x]
+    arg [-L/home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x/../../../../i686-linux-android/lib] ==> dir [/home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x/../../../../i686-linux-android/lib]
+    arg [-L/home/mconstant/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib] ==> dir [/home/mconstant/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib]
     arg [--build-id] ==> ignore
     arg [--warn-shared-textrel] ==> ignore
     arg [--fatal-warnings] ==> ignore
@@ -211,7 +211,7 @@ Parsed CXX implicit link information from above output:
     arg [-znow] ==> ignore
     arg [--gc-sections] ==> ignore
     arg [-znocopyreloc] ==> ignore
-    arg [CMakeFiles/cmTC_d3952.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+    arg [CMakeFiles/cmTC_49e4a.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
     arg [-lstdc++] ==> lib [stdc++]
     arg [-lm] ==> lib [m]
     arg [-lgcc] ==> lib [gcc]
@@ -221,27 +221,27 @@ Parsed CXX implicit link information from above output:
     arg [-lgcc] ==> lib [gcc]
     arg [-lgcc] ==> lib [gcc]
     arg [-ldl] ==> lib [dl]
-    arg [/root/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib/crtend_android.o] ==> ignore
+    arg [/home/mconstant/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib/crtend_android.o] ==> ignore
   remove lib [gcc]
   remove lib [gcc]
   remove lib [gcc]
   remove lib [gcc]
-  collapse library dir [/root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x] ==> [/root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x]
-  collapse library dir [/root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x/../../../../i686-linux-android/lib] ==> [/root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/i686-linux-android/lib]
-  collapse library dir [/root/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib] ==> [/root/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib]
+  collapse library dir [/home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x] ==> [/home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x]
+  collapse library dir [/home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x/../../../../i686-linux-android/lib] ==> [/home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/i686-linux-android/lib]
+  collapse library dir [/home/mconstant/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib] ==> [/home/mconstant/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib]
   implicit libs: [stdc++;m;dl;c;dl]
-  implicit dirs: [/root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x;/root/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/i686-linux-android/lib;/root/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib]
+  implicit dirs: [/home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/lib/gcc/i686-linux-android/4.9.x;/home/mconstant/Android/Sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/i686-linux-android/lib;/home/mconstant/Android/Sdk/ndk-bundle/platforms/android-21/arch-x86/usr/lib]
   implicit fwks: []
 
 
 
 
 Detecting CXX [-std=c++14] compiler features compiled with the following output:
-Change Dir: /home/mconstant/Documents/WBL/apps/WBL_Library/mobile/.externalNativeBuild/cmake/release/x86/CMakeFiles/CMakeTmp
+Change Dir: /home/mconstant/Documents/WBL/WBLLibrary/mobile/.externalNativeBuild/cmake/release/x86/CMakeFiles/CMakeTmp
 
-Run Build Command:"/root/Android/Sdk/cmake/3.6.3155560/bin/ninja" "cmTC_dfcd3"
-[1/2] Building CXX object CMakeFiles/cmTC_dfcd3.dir/feature_tests.cxx.o
-[2/2] Linking CXX executable cmTC_dfcd3
+Run Build Command:"/home/mconstant/Android/Sdk/cmake/3.6.3155560/bin/ninja" "cmTC_d2481"
+[1/2] Building CXX object CMakeFiles/cmTC_d2481.dir/feature_tests.cxx.o
+[2/2] Linking CXX executable cmTC_d2481
 
 
     Feature record: CXX_FEATURE:1cxx_aggregate_default_initializers
@@ -304,11 +304,11 @@ Run Build Command:"/root/Android/Sdk/cmake/3.6.3155560/bin/ninja" "cmTC_dfcd3"
 
 
 Detecting CXX [-std=c++11] compiler features compiled with the following output:
-Change Dir: /home/mconstant/Documents/WBL/apps/WBL_Library/mobile/.externalNativeBuild/cmake/release/x86/CMakeFiles/CMakeTmp
+Change Dir: /home/mconstant/Documents/WBL/WBLLibrary/mobile/.externalNativeBuild/cmake/release/x86/CMakeFiles/CMakeTmp
 
-Run Build Command:"/root/Android/Sdk/cmake/3.6.3155560/bin/ninja" "cmTC_06ed3"
-[1/2] Building CXX object CMakeFiles/cmTC_06ed3.dir/feature_tests.cxx.o
-[2/2] Linking CXX executable cmTC_06ed3
+Run Build Command:"/home/mconstant/Android/Sdk/cmake/3.6.3155560/bin/ninja" "cmTC_0454d"
+[1/2] Building CXX object CMakeFiles/cmTC_0454d.dir/feature_tests.cxx.o
+[2/2] Linking CXX executable cmTC_0454d
 
 
     Feature record: CXX_FEATURE:0cxx_aggregate_default_initializers
@@ -371,11 +371,11 @@ Run Build Command:"/root/Android/Sdk/cmake/3.6.3155560/bin/ninja" "cmTC_06ed3"
 
 
 Detecting CXX [-std=c++98] compiler features compiled with the following output:
-Change Dir: /home/mconstant/Documents/WBL/apps/WBL_Library/mobile/.externalNativeBuild/cmake/release/x86/CMakeFiles/CMakeTmp
+Change Dir: /home/mconstant/Documents/WBL/WBLLibrary/mobile/.externalNativeBuild/cmake/release/x86/CMakeFiles/CMakeTmp
 
-Run Build Command:"/root/Android/Sdk/cmake/3.6.3155560/bin/ninja" "cmTC_52322"
-[1/2] Building CXX object CMakeFiles/cmTC_52322.dir/feature_tests.cxx.o
-[2/2] Linking CXX executable cmTC_52322
+Run Build Command:"/home/mconstant/Android/Sdk/cmake/3.6.3155560/bin/ninja" "cmTC_72781"
+[1/2] Building CXX object CMakeFiles/cmTC_72781.dir/feature_tests.cxx.o
+[2/2] Linking CXX executable cmTC_72781
 
 
     Feature record: CXX_FEATURE:0cxx_aggregate_default_initializers
