@@ -13,8 +13,9 @@ import android.util.Log;
 import java.lang.ref.WeakReference;
 
 import wbl.egr.uri.library.band.models.SensorModel;
+import wbl.egr.uri.library.band.receivers.BandInfoReceiver;
 import wbl.egr.uri.library.band.receivers.BandUpdateStateReceiver;
-import wbl.egr.uri.library.band.services.BandConnectionJobServiceBETA;
+import wbl.egr.uri.library.band.services.BandConnectionJobService;
 import wbl.egr.uri.library.band.tasks.RequestHeartRateTask;
 
 /**
@@ -30,25 +31,36 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         @Override
         public void onReceive(Context context, Intent intent) {
             switch (intent.getIntExtra(BandUpdateStateReceiver.EXTRA_NEW_STATE, -1)) {
-                case BandConnectionJobServiceBETA.STATE_CONNECTED:
+                case BandConnectionJobService.STATE_CONNECTED:
                     log("Connected");
+                    BandConnectionJobService.requestBandInfo(mContext);
                     String[] sensors = {SensorModel.SENSOR_ACCELEROMETER};
-                    BandConnectionJobServiceBETA.startStream(mContext, false, sensors);
+                    BandConnectionJobService.startStream(mContext, false, sensors);
                     break;
-                case BandConnectionJobServiceBETA.STATE_DISCONNECTED:
+                case BandConnectionJobService.STATE_DISCONNECTED:
                     log("Disconnected");
 
                     break;
-                case BandConnectionJobServiceBETA.STATE_BAND_NOT_WORN:
+                case BandConnectionJobService.STATE_BAND_NOT_WORN:
                     log("Band not Worn");
                     break;
-                case BandConnectionJobServiceBETA.STATE_STREAMING:
+                case BandConnectionJobService.STATE_STREAMING:
                     log("Start Streaming");
                     break;
-                case BandConnectionJobServiceBETA.STATE_BAND_OFF:
+                case BandConnectionJobService.STATE_BAND_OFF:
                     log("Band off");
                     break;
             }
+        }
+    };
+
+    private BandInfoReceiver mBandInfoReceiver = new BandInfoReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String[] bandInfo = intent.getStringArrayExtra(BandInfoReceiver.EXTRA_INFO);
+            log("FW: " + bandInfo[0] + "\n" +
+                "HW: " + bandInfo[1] + "\n" +
+                "Band: " + bandInfo[2]);
         }
     };
 
@@ -62,12 +74,14 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         mSharedPreferences.registerOnSharedPreferenceChangeListener(this);
 
         registerReceiver(mBandUpdateStateReceiver, BandUpdateStateReceiver.INTENT_FILTER);
+        registerReceiver(mBandInfoReceiver, BandInfoReceiver.INTENT_FILTER);
         mJobScheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
     }
 
     @Override
     protected void onDestroy() {
         mSharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
+        unregisterReceiver(mBandInfoReceiver);
         unregisterReceiver(mBandUpdateStateReceiver);
         mJobScheduler.cancelAll();
         mContext.clear();
@@ -79,12 +93,12 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         switch (key) {
             case "pref_enable_band_collection":
                 if (sharedPreferences.getBoolean(key, false)) {
-                    startService(new Intent(this, BandConnectionJobServiceBETA.class));
+                    startService(new Intent(this, BandConnectionJobService.class));
                     new RequestHeartRateTask().execute(new WeakReference<Activity>(this));
-                    BandConnectionJobServiceBETA.connect(mContext, true);
+                    BandConnectionJobService.connect(mContext, true);
                 } else {
-                    BandConnectionJobServiceBETA.stopStream(mContext);
-                    BandConnectionJobServiceBETA.disconnect(mContext);
+                    BandConnectionJobService.stopStream(mContext);
+                    BandConnectionJobService.disconnect(mContext);
                 }
                 break;
         }

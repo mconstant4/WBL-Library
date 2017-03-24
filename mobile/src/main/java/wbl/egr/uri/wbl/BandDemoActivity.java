@@ -11,7 +11,7 @@ import android.util.Log;
 import java.lang.ref.WeakReference;
 
 import wbl.egr.uri.library.band.receivers.BandUpdateStateReceiver;
-import wbl.egr.uri.library.band.services.BandConnectionJobServiceBETA;
+import wbl.egr.uri.library.band.services.BandConnectionJobService;
 import wbl.egr.uri.library.band.tasks.RequestHeartRateTask;
 
 /**
@@ -80,23 +80,23 @@ public class BandDemoActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             switch (intent.getIntExtra(BandUpdateStateReceiver.EXTRA_NEW_STATE, -1)) {
-                case BandConnectionJobServiceBETA.STATE_CONNECTED:
+                case BandConnectionJobService.STATE_CONNECTED:
                     log("Connected");
                     String[] sensors = {};
-                    BandConnectionJobServiceBETA.startStream(new WeakReference<Context>(mContext), true, sensors);
+                    BandConnectionJobService.startStream(new WeakReference<Context>(mContext), true, sensors);
                     break;
-                case BandConnectionJobServiceBETA.STATE_DISCONNECTED:
+                case BandConnectionJobService.STATE_DISCONNECTED:
                     log("Disconnected");
 
                     break;
-                case BandConnectionJobServiceBETA.STATE_BAND_NOT_WORN:
+                case BandConnectionJobService.STATE_BAND_NOT_WORN:
                     log("Band not Worn");
 
                     break;
-                case BandConnectionJobServiceBETA.STATE_STREAMING:
+                case BandConnectionJobService.STATE_STREAMING:
                     log("Start Streaming");
                     break;
-                case BandConnectionJobServiceBETA.STATE_BAND_OFF:
+                case BandConnectionJobService.STATE_BAND_OFF:
                     log("Band off");
                     break;
             }
@@ -110,22 +110,22 @@ public class BandDemoActivity extends AppCompatActivity {
 
         new RequestHeartRateTask().execute(new WeakReference<Activity>(this));
 
-        startService(new Intent(this, BandConnectionJobServiceBETA.class));
+        startService(new Intent(this, BandConnectionJobService.class));
         registerReceiver(mBandUpdateStateReceiver, BandUpdateStateReceiver.INTENT_FILTER);
         mJobScheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
 
         mContext = this;
 
-        BandConnectionJobServiceBETA.connect(new WeakReference<Context>(mContext), true);
+        BandConnectionJobService.connect(new WeakReference<Context>(mContext), true);
     }
 
     @Override
     protected void onDestroy() {
-        BandConnectionJobServiceBETA.stopStream(new WeakReference<Context>(mContext));
-        BandConnectionJobServiceBETA.disconnect(new WeakReference<Context>(mContext));
+        BandConnectionJobService.stopStream(new WeakReference<Context>(mContext));
+        BandConnectionJobService.disconnect(new WeakReference<Context>(mContext));
         unregisterReceiver(mBandUpdateStateReceiver);
         mJobScheduler.cancelAll();
-        stopService(new Intent(this, BandConnectionJobServiceBETA.class));
+        stopService(new Intent(this, BandConnectionJobService.class));
 
         super.onDestroy();
     }

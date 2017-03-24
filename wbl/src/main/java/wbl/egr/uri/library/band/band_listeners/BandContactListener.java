@@ -3,7 +3,6 @@ package wbl.egr.uri.library.band.band_listeners;
 import android.content.Context;
 import android.content.Intent;
 
-import com.microsoft.band.sensors.BandAmbientLightEvent;
 import com.microsoft.band.sensors.BandContactEvent;
 import com.microsoft.band.sensors.BandContactEventListener;
 import com.microsoft.band.sensors.BandContactState;
@@ -15,9 +14,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import wbl.egr.uri.library.band.BandApplication;
-import wbl.egr.uri.library.band.receivers.BandContactStateReceiver;
 import wbl.egr.uri.library.band.receivers.BandUpdateStateReceiver;
-import wbl.egr.uri.library.band.services.BandConnectionJobServiceBETA;
 import wbl.egr.uri.library.io.services.DataLogService;
 
 
