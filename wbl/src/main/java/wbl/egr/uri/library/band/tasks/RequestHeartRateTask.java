@@ -7,6 +7,8 @@ import android.os.AsyncTask;
 import com.microsoft.band.BandClient;
 import com.microsoft.band.BandClientManager;
 import com.microsoft.band.BandInfo;
+import com.microsoft.band.UserConsent;
+import com.microsoft.band.sensors.BandSensorManager;
 import com.microsoft.band.sensors.HeartRateConsentListener;
 
 import java.lang.ref.WeakReference;
@@ -45,7 +47,10 @@ public class RequestHeartRateTask extends AsyncTask<WeakReference<Activity>, Voi
                 if (activityWeakReference.get() != null) {
                     BandClient bandClient = bandClientManager.create(activityWeakReference.get(), pairedBands[0]);
                     bandClient.connect().await();
-                    bandClient.getSensorManager().requestHeartRateConsent(activityWeakReference.get(), mHeartRateConsentListener);
+                    BandSensorManager sensorManager = bandClient.getSensorManager();
+                    if (!sensorManager.getCurrentHeartRateConsent().equals(UserConsent.GRANTED)) {
+                        bandClient.getSensorManager().requestHeartRateConsent(activityWeakReference.get(), mHeartRateConsentListener);
+                    }
                     bandClient.disconnect().await();
                 }
             } catch (Exception e) {

@@ -2,6 +2,7 @@ package wbl.egr.uri.library.band.services;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.job.JobInfo;
 import android.app.job.JobParameters;
 import android.app.job.JobScheduler;
@@ -33,15 +34,23 @@ import com.microsoft.band.sensors.SampleRate;
 import java.lang.ref.WeakReference;
 
 import wbl.egr.uri.library.band.band_listeners.BandAccelerometerListener;
+import wbl.egr.uri.library.band.band_listeners.BandAltimeterListener;
 import wbl.egr.uri.library.band.band_listeners.BandAmbientLightListener;
+import wbl.egr.uri.library.band.band_listeners.BandBarometerListener;
+import wbl.egr.uri.library.band.band_listeners.BandCaloriesListener;
 import wbl.egr.uri.library.band.band_listeners.BandContactListener;
+import wbl.egr.uri.library.band.band_listeners.BandDistanceListener;
 import wbl.egr.uri.library.band.band_listeners.BandGsrListener;
+import wbl.egr.uri.library.band.band_listeners.BandGyroscopeListener;
 import wbl.egr.uri.library.band.band_listeners.BandHeartRateListener;
+import wbl.egr.uri.library.band.band_listeners.BandPedometerListener;
 import wbl.egr.uri.library.band.band_listeners.BandRRIntervalListener;
 import wbl.egr.uri.library.band.band_listeners.BandSkinTemperatureListener;
+import wbl.egr.uri.library.band.band_listeners.BandUvListener;
 import wbl.egr.uri.library.band.receivers.BandContactStateReceiver;
 import wbl.egr.uri.library.band.receivers.BandInfoReceiver;
 import wbl.egr.uri.library.band.receivers.BandUpdateStateReceiver;
+import wbl.egr.uri.library.band.receivers.NotificationReceiver;
 
 import static wbl.egr.uri.library.band.models.SensorModel.SENSOR_ACCELEROMETER;
 import static wbl.egr.uri.library.band.models.SensorModel.SENSOR_ALTIMETER;
@@ -74,6 +83,7 @@ public class BandConnectionJobService extends JobService {
     private static final int ACTION_START_STREAM = 2;
     private static final int ACTION_STOP_STREAM = 3;
     private static final int ACTION_REQUEST_BAND_INFO = 4;
+    private static final int ACTION_STOP_SERVICE = 5;
 
     public static final int STATE_CONNECTED = 0;
     public static final int STATE_DISCONNECTED = 1;
@@ -201,6 +211,31 @@ public class BandConnectionJobService extends JobService {
         }
     }
 
+    public static void startService(Context context) {
+        context.startService(new Intent(context, BandConnectionJobService.class));
+    }
+
+    public static void stopService(WeakReference<Context> context) {
+        if (context == null) {
+            Log.d("BandConnectionService", "Stop Service Call Failed (Called with invalid parameters)");
+            return;
+        }
+
+        if (context.get() != null) {
+            JobScheduler jobScheduler = (JobScheduler) context.get().getSystemService(Context.JOB_SCHEDULER_SERVICE);
+
+            PersistableBundle bundle = new PersistableBundle();
+            bundle.putInt(KEY_ACTION, ACTION_STOP_SERVICE);
+
+            JobInfo.Builder builder = new JobInfo.Builder(8, new ComponentName(context.get().getPackageName(), BandConnectionJobService.class.getName()));
+            builder.setExtras(bundle);
+            builder.setOverrideDeadline(10);
+            if (jobScheduler.schedule(builder.build()) <= 0) {
+                Log.d("BandConnectionService", "Stop Service Call Failed (Error Scheduling Job)");
+            }
+        }
+    }
+
     private final int NOTIFICATION_ID = 437;
 
     private Context mContext;
@@ -212,12 +247,19 @@ public class BandConnectionJobService extends JobService {
     private String[] mSensorsToStream;
 
     private BandAccelerometerListener mBandAccelerometerListener;
+    private BandAltimeterListener mBandAltimeterListener;
     private BandAmbientLightListener mBandAmbientLightListener;
+    private BandBarometerListener mBandBarometerListener;
+    private BandCaloriesListener mBandCaloriesListener;
     private BandContactListener mBandContactListener;
+    private BandDistanceListener mBandDistanceListener;
     private BandGsrListener mBandGsrListener;
+    private BandGyroscopeListener mBandGyroscopeListener;
     private BandHeartRateListener mBandHeartRateListener;
+    private BandPedometerListener mBandPedometerListener;
     private BandRRIntervalListener mBandRRIntervalListener;
     private BandSkinTemperatureListener mBandSkinTemperatureListener;
+    private BandUvListener mBandUvListener;
 
     private Handler mJobHandler = new Handler(new Handler.Callback() {
         @Override
@@ -254,6 +296,22 @@ public class BandConnectionJobService extends JobService {
                 case ACTION_REQUEST_BAND_INFO:
                     getBandInfo();
                     break;
+                case ACTION_STOP_SERVICE:
+                    updateNotification("Stopping");
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            stopStream();
+                            disconnect();
+                            try {
+                                Thread.sleep(250);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            stopSelf();
+                        }
+                    }).start();
+                    break;
             }
 
             jobFinished(parameters, false);
@@ -282,14 +340,25 @@ public class BandConnectionJobService extends JobService {
         mBandClientManager = BandClientManager.getInstance();
 
         mBandAccelerometerListener = new BandAccelerometerListener(this);
+        mBandAltimeterListener = new BandAltimeterListener(this);
         mBandAmbientLightListener = new BandAmbientLightListener(this);
+        mBandBarometerListener = new BandBarometerListener(this);
+        mBandCaloriesListener = new BandCaloriesListener(this);
         mBandContactListener = new BandContactListener(this);
+        mBandDistanceListener = new BandDistanceListener(this);
         mBandGsrListener = new BandGsrListener(this);
+        mBandGyroscopeListener = new BandGyroscopeListener(this);
         mBandHeartRateListener = new BandHeartRateListener(this);
+        mBandPedometerListener = new BandPedometerListener(this);
         mBandRRIntervalListener = new BandRRIntervalListener(this);
         mBandSkinTemperatureListener = new BandSkinTemperatureListener(this);
+        mBandUvListener = new BandUvListener(this);
 
         registerReceiver(mBandContactStateReceiver, BandContactStateReceiver.INTENT_FILTER);
+
+        // Generate Pending Intent for Notification
+        Intent intent = new Intent(this, NotificationReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         //Declare as Foreground Service
         Notification notification = new Notification.Builder(this)
@@ -297,6 +366,7 @@ public class BandConnectionJobService extends JobService {
                 .setSmallIcon(android.R.drawable.ic_popup_reminder)
                 .setContentText("Touch to Disconnect")
                 .setSubText("Band Status: Initializing")
+                .setContentIntent(pendingIntent)
                 .setOngoing(true)
                 .setPriority(Notification.PRIORITY_HIGH)
                 .build();
@@ -369,34 +439,34 @@ public class BandConnectionJobService extends JobService {
                                 bandSensorManager.registerAccelerometerEventListener(mBandAccelerometerListener, SampleRate.MS128);
                                 break;
                             case SENSOR_ALTIMETER:
-                                //Implement this
+                                bandSensorManager.registerAltimeterEventListener(mBandAltimeterListener);
                                 break;
                             case SENSOR_AMBIENT_LIGHT:
                                 bandSensorManager.registerAmbientLightEventListener(mBandAmbientLightListener);
                                 break;
                             case SENSOR_BAROMETER:
-                                //Implement this
+                                bandSensorManager.registerBarometerEventListener(mBandBarometerListener);
                                 break;
                             case SENSOR_CALORIES:
-                                //Implement this
+                                bandSensorManager.registerCaloriesEventListener(mBandCaloriesListener);
                                 break;
                             case SENSOR_CONTACT:
                                 bandSensorManager.registerContactEventListener(mBandContactListener);
                                 break;
                             case SENSOR_DISTANCE:
-                                //Implement this
+                                bandSensorManager.registerDistanceEventListener(mBandDistanceListener);
                                 break;
                             case SENSOR_GSR:
                                 bandSensorManager.registerGsrEventListener(mBandGsrListener, GsrSampleRate.MS5000);
                                 break;
                             case SENSOR_GYROSCOPE:
-                                //Implement this
+                                bandSensorManager.registerGyroscopeEventListener(mBandGyroscopeListener, SampleRate.MS128);
                                 break;
                             case SENSOR_HEART_RATE:
                                 bandSensorManager.registerHeartRateEventListener(mBandHeartRateListener);
                                 break;
                             case SENSOR_PEDOMETER:
-                                //Implement this
+                                bandSensorManager.registerPedometerEventListener(mBandPedometerListener);
                                 break;
                             case SENSOR_RR_INTERVAL:
                                 bandSensorManager.registerRRIntervalEventListener(mBandRRIntervalListener);
@@ -405,7 +475,7 @@ public class BandConnectionJobService extends JobService {
                                 bandSensorManager.registerSkinTemperatureEventListener(mBandSkinTemperatureListener);
                                 break;
                             case SENSOR_UV:
-                                //Implement this
+                                bandSensorManager.registerUVEventListener(mBandUvListener);
                                 break;
                             default:
                                 log("Invalid Sensor Name!");
@@ -455,11 +525,12 @@ public class BandConnectionJobService extends JobService {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    String[] bandInfo = new String[3];
+                    String[] bandInfo = new String[4];
                     try {
                         bandInfo[0] = mBandClient.getFirmwareVersion().await();
                         bandInfo[1] = mBandClient.getHardwareVersion().await();
-                        bandInfo[2] = mBandClient.toString();
+                        bandInfo[2] = mBandClientManager.getPairedBands()[0].getName();
+                        bandInfo[3] = mBandClientManager.getPairedBands()[0].getMacAddress();
 
                         Intent intent = new Intent(BandInfoReceiver.INTENT_FILTER.getAction(0));
                         intent.putExtra(BandInfoReceiver.EXTRA_INFO, bandInfo);
