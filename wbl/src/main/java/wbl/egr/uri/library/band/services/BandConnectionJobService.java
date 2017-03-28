@@ -59,37 +59,120 @@ import static wbl.egr.uri.library.band.models.SensorModel.SENSOR_SKIN_TEMPERATUR
 import static wbl.egr.uri.library.band.models.SensorModel.SENSOR_UV;
 
 /**
- * Created by root on 3/22/17.
+ * Created by Matt Constant on 3/22/17.
  *
+ * The Band Connection Job Service is responsible for all long lasting connections between the
+ * Android device and the Microsoft Band. Other components are able to interact with this Service
+ * by using the static methods provided by this Service. Using these methods, rather than directly
+ * communicating with this Service, ensures that this Service is always interacted with properly
+ * and reduces the risk of avoidable errors.
+ * <br/>
+ * In order to receive updates from this Service, including Band state updates and Band info
+ * updates, the component must register a Broadcast receiver. State updates are broadcast to
+ * BandUpdateStateReceivers and Band Info updates are sent to BandInfoReceivers.
+ * <br/>
+ * The Service keeps track of the state of the connection to the Band using the mState integer
+ * variable. Any other component can retrieve the current state by calling the static method
+ * getState().
+ * <br/>
+ * This Service provides the following options:<br/>
+ *     1) periodic recordings - When calling startStream, the Caller can specify if the Band should
+ *     record the sensors periodically or continuously. Periodic recordings default to 5 minutes on
+ *     and 5 minutes off by default.
+ *     <br/>
+ *     2) sensors to record - When calling startStream, the Caller can specify which sensors from the
+ *     Band are to be recorded using a String array. The available sensors and their keys can be
+ *     found in the SensorModel class.
+ *     <br/>
+ *     3) enable haptic feedback - When calling connect, the Caller can either enable or disable
+ *     haptic feedback. When enabled, the Band will vibrate whenever it is connected or disconnected
+ *     from this Android device.
  */
 
 public class BandConnectionJobService extends JobService {
+    /**
+     * Key used internally to specify the action to be performed.
+     */
     private static final String KEY_ACTION = "uri.egr.wbl.library.band_action";
+    /**
+     * Key used internally to specify whether the recordings should be continuous or periodic.
+     */
     private static final String KEY_SET_PERIODIC = "uri.egr.wbl.library.band_set_periodic";
+    /**
+     * Key used internally to specify what sensors should be recorded.
+     */
     private static final String KEY_SENSORS_TO_STREAM = "uri.egr.wbl.library.band_sensors_to_stream";
+    /**
+     * Key used internally to specify whether to enable haptic feedback or not.
+     */
     private static final String KEY_ENABLE_HAPTIC_FEEDBACK = "uri.egr.wbl.library.band_enable_haptic_feedback";
 
+    /**
+     * This action requests the Service connects to the Band.
+     */
     private static final int ACTION_CONNECT = 0;
+    /**
+     * This action requests the Service disconnects from the Band.
+     */
     private static final int ACTION_DISCONNECT = 1;
+    /**
+     * This action requests the Service starts streaming sensor data from the Band.
+     */
     private static final int ACTION_START_STREAM = 2;
+    /**
+     * This action requests the Service stops streaming sensor data from the Band.
+     */
     private static final int ACTION_STOP_STREAM = 3;
+    /**
+     * This action requests the Service Broadcast the information about the connected Band.
+     */
     private static final int ACTION_REQUEST_BAND_INFO = 4;
 
+    /**
+     * This is the Band connection state when it is connected to the Android device but not
+     * streaming data.
+     */
     public static final int STATE_CONNECTED = 0;
+    /**
+     * This is the Band connection state when it is not connected to the Android device.
+     */
     public static final int STATE_DISCONNECTED = 1;
+    /**
+     * This is the Band connection state when the Band is connected and streaming sensor data to the
+     * Android device.
+     */
     public static final int STATE_STREAMING = 2;
+    /**
+     * This is the Band connection state when the Band is connected but the Band is not being worn.
+     * In this state, sensor data recording has been paused and is waiting for the Band to be put
+     * back on.
+     */
     public static final int STATE_BAND_NOT_WORN = 3;
+    /**
+     * This is the Band connection state when the Band is turned off or out of range from the
+     * Android device.
+     */
     public static final int STATE_BAND_OFF = 4;
 
+    /**
+     * The connect(WeakReference<Context>, boolean) static method allows other components of this
+     * app to request to connect to a Band. Once connected, all BandStateUpdateReceivers will
+     * be updated with the state of STATE_CONNECTED.
+     * @param context A weak reference to the context of the Caller.
+     * @param enableHapticFeedback If true, the Band will vibrate when connected to and disconnected
+     *                             from.
+     */
     public static void connect(WeakReference<Context> context, boolean enableHapticFeedback) {
         if (context == null) {
-            Log.d("BandConnectionService", "Connect Call Failed (Called with invalid parameters)");
+            // context must be valid in order to schedule new job.
+            Log.d("BandConnectionService", "Connect Call Failed (Called with Invalid Parameters)");
             return;
         }
 
         if (context.get() != null) {
             JobScheduler jobScheduler = (JobScheduler) context.get().getSystemService(Context.JOB_SCHEDULER_SERVICE);
 
+            // set action of job.
             PersistableBundle bundle = new PersistableBundle();
             bundle.putInt(KEY_ACTION, ACTION_CONNECT);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
@@ -105,9 +188,16 @@ public class BandConnectionJobService extends JobService {
         }
     }
 
+    /**
+     * The disconnect(WeakReference<Context>) static method allows other components of this app
+     * to request to disconnected from a currently connected Microsoft Band. Once disconnected,
+     * all BandUpdateStateReceivers will be updated with the value STATE_DISCONNECTED.
+     * @param context A weak reference to the context of the Caller.
+     */
     public static void disconnect(WeakReference<Context> context) {
         if (context == null) {
-            Log.d("BandConnectionService", "Disconnect Call Failed (Called with invalid parameters)");
+            // context must be valid in order to schedule new job.
+            Log.d("BandConnectionService", "Disconnect Call Failed (Called with Invalid Parameters)");
             return;
         }
 
@@ -117,7 +207,11 @@ public class BandConnectionJobService extends JobService {
             PersistableBundle bundle = new PersistableBundle();
             bundle.putInt(KEY_ACTION, ACTION_DISCONNECT);
 
-            JobInfo.Builder builder = new JobInfo.Builder(2, new ComponentName(context.get().getPackageName(), BandConnectionJobService.class.getName()));
+            JobInfo.Builder builder = new JobInfo.Builder(
+                    2,
+                    new ComponentName(context.get().getPackageName(),
+                            BandConnectionJobService.class.getName())
+            );
             builder.setExtras(bundle);
             builder.setOverrideDeadline(200);
             if (jobScheduler.schedule(builder.build()) <= 0) {
@@ -126,9 +220,18 @@ public class BandConnectionJobService extends JobService {
         }
     }
 
+    /**
+     * The startStream(WeakReference<Context>, boolean, String[]) static method requests the Service
+     * starts recording sensor data from the connected Microsoft Band.
+     * @param context A weak reference to the context of the Caller.
+     * @param isPeriodic If true, sensor data recordings will occur periodically. Otherwise, the
+     *                   recording will be continuous.
+     * @param sensorsToStream The array of keys representing the Sensors to be recorded. The keys
+     *                        can be found in the SensorModel class.
+     */
     public static void startStream(WeakReference<Context> context, boolean isPeriodic, String[] sensorsToStream) {
         if (context == null) {
-            Log.d("BandConnectionService", "Start Stream Call Failed (Called with invalid parameters)");
+            Log.d("BandConnectionService", "Start Stream Call Failed (Called with Invalid Parameters)");
             return;
         }
 
@@ -146,7 +249,11 @@ public class BandConnectionJobService extends JobService {
                 }
             }
 
-            JobInfo.Builder builder = new JobInfo.Builder(3, new ComponentName(context.get().getPackageName(), BandConnectionJobService.class.getName()));
+            JobInfo.Builder builder = new JobInfo.Builder(
+                    3,
+                    new ComponentName(context.get().getPackageName(),
+                            BandConnectionJobService.class.getName())
+            );
             builder.setExtras(bundle);
             if (isPeriodic) {
                 builder.setPeriodic(60000);
@@ -227,7 +334,7 @@ public class BandConnectionJobService extends JobService {
 
             switch (parameters.getExtras().getInt(KEY_ACTION)) {
                 case ACTION_CONNECT:
-                    if (mBandClient != null && (mBandClient != null && mBandClient.isConnected())) {
+                    if (mBandClient != null && mBandClient.isConnected()) {
                         log("Band already connected!");
                         break;
                     }
