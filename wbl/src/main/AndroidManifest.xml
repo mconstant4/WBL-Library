@@ -16,6 +16,8 @@
 
         <service android:name=".io.services.DataLogService"/>
 
+        <receiver android:name=".band.receivers.NotificationReceiver"/>
+
     </application>
 
 </manifest>

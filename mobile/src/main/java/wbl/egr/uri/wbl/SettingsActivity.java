@@ -34,7 +34,7 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
                 case BandConnectionJobService.STATE_CONNECTED:
                     log("Connected");
                     BandConnectionJobService.requestBandInfo(mContext);
-                    String[] sensors = {SensorModel.SENSOR_ACCELEROMETER};
+                    String[] sensors = {SensorModel.SENSOR_ACCELEROMETER, SensorModel.SENSOR_HEART_RATE, SensorModel.SENSOR_DISTANCE};
                     BandConnectionJobService.startStream(mContext, false, sensors);
                     break;
                 case BandConnectionJobService.STATE_DISCONNECTED:
@@ -60,7 +60,8 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
             String[] bandInfo = intent.getStringArrayExtra(BandInfoReceiver.EXTRA_INFO);
             log("FW: " + bandInfo[0] + "\n" +
                 "HW: " + bandInfo[1] + "\n" +
-                "Band: " + bandInfo[2]);
+                "Name: " + bandInfo[2] + "\n" +
+                "Address: " + bandInfo[3]);
         }
     };
 
@@ -93,8 +94,8 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         switch (key) {
             case "pref_enable_band_collection":
                 if (sharedPreferences.getBoolean(key, false)) {
-                    startService(new Intent(this, BandConnectionJobService.class));
                     new RequestHeartRateTask().execute(new WeakReference<Activity>(this));
+                    BandConnectionJobService.startService(this);
                     BandConnectionJobService.connect(mContext, true);
                 } else {
                     BandConnectionJobService.stopStream(mContext);
