@@ -1,11 +1,16 @@
 package wbl.egr.uri.library.band.services;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.icu.lang.UProperty;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.microsoft.band.BandClient;
@@ -37,7 +42,10 @@ import wbl.egr.uri.library.band.band_listeners.BandSkinTemperatureListener;
 import wbl.egr.uri.library.band.band_listeners.BandUvListener;
 import wbl.egr.uri.library.band.enums.BandActions;
 import wbl.egr.uri.library.band.enums.BandState;
+import wbl.egr.uri.library.band.models.BandModel;
 import wbl.egr.uri.library.band.models.SensorModel;
+import wbl.egr.uri.library.band.receivers.BandContactStateReceiver;
+import wbl.egr.uri.library.band.receivers.BandInfoReceiver;
 import wbl.egr.uri.library.band.receivers.BandStateUpdateReceiver;
 
 import static wbl.egr.uri.library.band.models.SensorModel.SENSOR_ACCELEROMETER;
@@ -65,13 +73,18 @@ public class BandConnectionService extends Service {
     private static final String EXTRA_SET_PERIODIC = "wbl.band.extra_set_periodic";
     private static final String EXTRA_SENSORS = "wbl.band.extra_sensors";
 
-    public static void connect(Context context, boolean autoStream, boolean periodic,
-                               String[] sensorsToStream) {
+    public static void connect(Context context, BandModel bandModel) {
         Intent intent = new Intent(context, BandConnectionService.class);
         intent.putExtra(EXTRA_ACTION, BandActions.CONNECT);
-        intent.putExtra(EXTRA_AUTO_STREAM, autoStream);
-        intent.putExtra(EXTRA_SET_PERIODIC, periodic);
-        intent.putExtra(EXTRA_SENSORS, sensorsToStream);
+        intent.putExtra(EXTRA_AUTO_STREAM, bandModel.isAutoStream());
+        intent.putExtra(EXTRA_SET_PERIODIC, bandModel.isPeriodic());
+        intent.putExtra(EXTRA_SENSORS, bandModel.getSensorsToStream());
+        context.startService(intent);
+    }
+
+    public static void getInfo(Context context) {
+        Intent intent = new Intent(context, BandConnectionService.class);
+        intent.putExtra(EXTRA_ACTION, BandActions.GET_INFO);
         context.startService(intent);
     }
 
@@ -99,14 +112,14 @@ public class BandConnectionService extends Service {
                 public void onResult(ConnectionState connectionState, Throwable throwable) {
                     if (connectionState == ConnectionState.CONNECTED) {
                         log("Successfully Connected to " + mBandClientManager.getPairedBands()[0].getName());
-                        mBandState = BandState.CONNECTED;
+                        updateState(BandState.CONNECTED);
                         mBandClient.registerConnectionCallback(mBandConnectionCallback);
                         if (mAutoStream) {
                             startStream();
                         }
                     } else {
                         log("Error Connecting to Band");
-                        mBandState = BandState.DISCONNECTED;
+                        updateState(BandState.DISCONNECTED);
                     }
                 }
             };
@@ -115,7 +128,7 @@ public class BandConnectionService extends Service {
         public void onResult(Void aVoid, Throwable throwable) {
             log("Band Disconnected");
             mBandClient.unregisterConnectionCallback();
-            mBandState = BandState.DISCONNECTED;
+            updateState(BandState.DISCONNECTED);
         }
     };
     private BandConnectionCallback mBandConnectionCallback = new BandConnectionCallback() {
@@ -146,6 +159,18 @@ public class BandConnectionService extends Service {
             }
         }
     };
+    private BandContactStateReceiver mBandContactStateReceiver = new BandContactStateReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getBooleanExtra(BandContactStateReceiver.BAND_STATE, false)) {
+                // Resume Recordings
+                returnFromDynamicBlackout();
+            } else {
+                // Dynamic Blackout
+                enterDynamicBlackout();
+            }
+        }
+    };
     private Handler mToggleHandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -172,6 +197,8 @@ public class BandConnectionService extends Service {
             return false;
         }
     });
+
+    private final int NOTIFICATION_ID = 34;
 
     private BandClientManager mBandClientManager;
     private BandClient mBandClient;
@@ -200,12 +227,18 @@ public class BandConnectionService extends Service {
     public void onCreate() {
         super.onCreate();
 
+        log("Service Created");
+
         mContext = this;
         mBandClientManager = BandClientManager.getInstance();
         mBandState = BandState.STARTING;
         mSensorsToStream = SensorModel.DEFAULT_SENSORS;
         mAutoStream = false;
         mPeriodic = false;
+
+        startForeground(NOTIFICATION_ID, getNotification(BandState.STARTING.getState()));
+
+        registerReceiver(mBandContactStateReceiver, BandContactStateReceiver.INTENT_FILTER);
 
         mBandAccelerometerListener = new BandAccelerometerListener(this);
         mBandAltimeterListener = new BandAltimeterListener(this);
@@ -241,6 +274,34 @@ public class BandConnectionService extends Service {
                     log("Connect Failed!");
                 }
                 break;
+            case GET_INFO:
+                if (    mBandState == BandState.CONNECTED   ||
+                        mBandState == BandState.STREAMING   ||
+                        mBandState == BandState.NOT_WORN    ||
+                        mBandState == BandState.PAUSED) {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            String[] bandInfo = new String[4];
+                            bandInfo[0] = mBandClientManager.getPairedBands()[0].getName();
+                            bandInfo[1] = mBandClientManager.getPairedBands()[0].getMacAddress();
+                            try {
+                                bandInfo[2] = mBandClient.getFirmwareVersion().await();
+                                bandInfo[3] = mBandClient.getHardwareVersion().await();
+                            } catch (BandException | InterruptedException e) {
+                                e.printStackTrace();
+
+                                bandInfo[2] = null;
+                                bandInfo[3] = null;
+                            } finally {
+                                Intent infoIntent = new Intent(BandInfoReceiver.INTENT_FILTER.getAction(0));
+                                infoIntent.putExtra(BandInfoReceiver.EXTRA_INFO, bandInfo);
+                                sendBroadcast(infoIntent);
+                            }
+                        }
+                    }).start();
+                }
+                break;
             case START_STREAM:
                 log("Starting Stream...");
                 if (startStream()) {
@@ -271,6 +332,29 @@ public class BandConnectionService extends Service {
                 }
                 break;
             case STOP:
+                if (mBandState == BandState.STREAMING || mBandState == BandState.NOT_WORN || mBandState == BandState.PAUSED) {
+                    stopStream();
+                }
+
+                if (mBandState == BandState.CONNECTED) {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                updateState(BandState.DISCONNECTING);
+                                disconnect();
+                                Thread.sleep(250);
+                                stopSelf();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            } finally {
+
+                            }
+                        }
+                    }).start();
+                } else {
+                    stopSelf();
+                }
 
                 break;
             default:
@@ -288,6 +372,9 @@ public class BandConnectionService extends Service {
 
     @Override
     public void onDestroy() {
+        stopForeground(true);
+        unregisterReceiver(mBandContactStateReceiver);
+        log("Service Destroyed");
         super.onDestroy();
     }
 
@@ -413,8 +500,13 @@ public class BandConnectionService extends Service {
     }
 
     private boolean disconnect() {
-        if (mBandState == BandState.DISCONNECTING) {;
-            mBandClient.disconnect().registerResultCallback(mBandResultCallback);
+        if (mBandState == BandState.DISCONNECTING) {
+            try {
+                mBandClient.disconnect().registerResultCallback(mBandResultCallback);
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+                updateState(BandState.DISCONNECTED);
+            }
             return true;
         } else {
             log("WARNING (Invalid State - " + mBandState.getState() + ")");
@@ -422,16 +514,187 @@ public class BandConnectionService extends Service {
         }
     }
 
+    private void returnFromDynamicBlackout() {
+        BandSensorManager bandSensorManager = mBandClient.getSensorManager();
+
+        log("Leaving Dynamic Blackout...");
+
+        try {
+            if (mSensorsToStream == null || mSensorsToStream.length == 0) {
+                log("WARNING (No Sensors Selected)");
+                return;
+            } else {
+                for (String sensorName : mSensorsToStream) {
+                    switch (sensorName) {
+                        case SENSOR_ACCELEROMETER:
+                            bandSensorManager.registerAccelerometerEventListener(mBandAccelerometerListener, SampleRate.MS128);
+                            break;
+                        case SENSOR_ALTIMETER:
+                            bandSensorManager.registerAltimeterEventListener(mBandAltimeterListener);
+                            break;
+                        case SENSOR_AMBIENT_LIGHT:
+                            bandSensorManager.registerAmbientLightEventListener(mBandAmbientLightListener);
+                            break;
+                        case SENSOR_BAROMETER:
+                            bandSensorManager.registerBarometerEventListener(mBandBarometerListener);
+                            break;
+                        case SENSOR_CALORIES:
+                            bandSensorManager.registerCaloriesEventListener(mBandCaloriesListener);
+                            break;
+                        case SENSOR_CONTACT:
+
+                            break;
+                        case SENSOR_DISTANCE:
+                            bandSensorManager.registerDistanceEventListener(mBandDistanceListener);
+                            break;
+                        case SENSOR_GSR:
+                            bandSensorManager.registerGsrEventListener(mBandGsrListener, GsrSampleRate.MS5000);
+                            break;
+                        case SENSOR_GYROSCOPE:
+                            bandSensorManager.registerGyroscopeEventListener(mBandGyroscopeListener, SampleRate.MS128);
+                            break;
+                        case SENSOR_HEART_RATE:
+                            bandSensorManager.registerHeartRateEventListener(mBandHeartRateListener);
+                            break;
+                        case SENSOR_PEDOMETER:
+                            bandSensorManager.registerPedometerEventListener(mBandPedometerListener);
+                            break;
+                        case SENSOR_RR_INTERVAL:
+                            bandSensorManager.registerRRIntervalEventListener(mBandRRIntervalListener);
+                            break;
+                        case SENSOR_SKIN_TEMPERATURE:
+                            bandSensorManager.registerSkinTemperatureEventListener(mBandSkinTemperatureListener);
+                            break;
+                        case SENSOR_UV:
+                            bandSensorManager.registerUVEventListener(mBandUvListener);
+                            break;
+                        default:
+                            log("Warning (Invalid Sensor Name - " + sensorName + ")");
+                            break;
+                    }
+                }
+            }
+        } catch (BandException | InvalidBandVersionException e) {
+            e.printStackTrace();
+        } finally {
+            updateState(BandState.STREAMING);
+        }
+    }
+
+    private void enterDynamicBlackout() {
+        BandSensorManager bandSensorManager = mBandClient.getSensorManager();
+
+        log("Entering Dynamic Blackout...");
+
+        try {
+            if (mSensorsToStream == null || mSensorsToStream.length == 0) {
+                log("WARNING (No Sensors Selected)");
+                return;
+            } else {
+                for (String sensorName : mSensorsToStream) {
+                    switch (sensorName) {
+                        case SENSOR_ACCELEROMETER:
+                            bandSensorManager.unregisterAccelerometerEventListener(mBandAccelerometerListener);
+                            break;
+                        case SENSOR_ALTIMETER:
+                            bandSensorManager.unregisterAltimeterEventListener(mBandAltimeterListener);
+                            break;
+                        case SENSOR_AMBIENT_LIGHT:
+                            bandSensorManager.unregisterAmbientLightEventListener(mBandAmbientLightListener);
+                            break;
+                        case SENSOR_BAROMETER:
+                            bandSensorManager.unregisterBarometerEventListener(mBandBarometerListener);
+                            break;
+                        case SENSOR_CALORIES:
+                            bandSensorManager.unregisterCaloriesEventListener(mBandCaloriesListener);
+                            break;
+                        case SENSOR_CONTACT:
+
+                            break;
+                        case SENSOR_DISTANCE:
+                            bandSensorManager.unregisterDistanceEventListener(mBandDistanceListener);
+                            break;
+                        case SENSOR_GSR:
+                            bandSensorManager.unregisterGsrEventListener(mBandGsrListener);
+                            break;
+                        case SENSOR_GYROSCOPE:
+                            bandSensorManager.unregisterGyroscopeEventListener(mBandGyroscopeListener);
+                            break;
+                        case SENSOR_HEART_RATE:
+                            bandSensorManager.unregisterHeartRateEventListener(mBandHeartRateListener);
+                            break;
+                        case SENSOR_PEDOMETER:
+                            bandSensorManager.unregisterPedometerEventListener(mBandPedometerListener);
+                            break;
+                        case SENSOR_RR_INTERVAL:
+                            bandSensorManager.unregisterRRIntervalEventListener(mBandRRIntervalListener);
+                            break;
+                        case SENSOR_SKIN_TEMPERATURE:
+                            bandSensorManager.unregisterSkinTemperatureEventListener(mBandSkinTemperatureListener);
+                            break;
+                        case SENSOR_UV:
+                            bandSensorManager.unregisterUVEventListener(mBandUvListener);
+                            break;
+                        default:
+                            log("Warning (Invalid Sensor Name - " + sensorName + ")");
+                            break;
+                    }
+                }
+            }
+        } catch (BandException e) {
+            e.printStackTrace();
+        } finally {
+            updateState(BandState.NOT_WORN);
+        }
+    }
+
     private void setDelayedToggle() {
-        mToggleHandler.sendEmptyMessageDelayed(3, 1000);
+        mToggleHandler.sendEmptyMessageDelayed(3, 3 * 60 * 1000);
     }
 
     private void updateState(BandState bandState) {
         mBandState = bandState;
 
+        updateNotification(bandState.getState());
+
         Intent intent = new Intent(BandStateUpdateReceiver.INTENT_FILTER.getAction(0));
         intent.putExtra(BandStateUpdateReceiver.EXTRA_STATE, bandState);
         sendBroadcast(intent);
+    }
+
+    private Notification getNotification(String status) {
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(mContext);
+        notificationBuilder.setContentTitle("EAR is Active");
+        notificationBuilder.setContentText("Band Status: " + status);
+        notificationBuilder.setSmallIcon(android.R.drawable.presence_online);
+        notificationBuilder.setPriority(Notification.PRIORITY_HIGH);
+        notificationBuilder.setOngoing(true);
+
+        Intent intent = new Intent(mContext, BandConnectionService.class);
+        intent.putExtra(EXTRA_ACTION, BandActions.STOP);
+        PendingIntent pendingIntent = PendingIntent.getService(mContext, 347, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        notificationBuilder.setContentIntent(pendingIntent);
+
+        return notificationBuilder.build();
+    }
+
+    private void updateNotification(String status) {
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(mContext);
+        notificationBuilder.setContentTitle("EAR is Active");
+        notificationBuilder.setContentText("Band Status: " + status);
+        notificationBuilder.setSmallIcon(android.R.drawable.presence_online);
+        notificationBuilder.setPriority(Notification.PRIORITY_HIGH);
+        notificationBuilder.setOngoing(true);
+
+        Intent intent = new Intent(mContext, BandConnectionService.class);
+        intent.putExtra(EXTRA_ACTION, BandActions.STOP);
+        PendingIntent pendingIntent = PendingIntent.getService(mContext, 347, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        notificationBuilder.setContentIntent(pendingIntent);
+
+        notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build());
     }
 
     private void log(String message) {

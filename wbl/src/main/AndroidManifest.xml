@@ -16,7 +16,7 @@
 
         <service android:name=".io.services.DataLogService"/>
 
-        <service android:name=".band.services.BandConnectionService"/>
+        <service android:name=".band.services.BandConnectionService" android:process=":band_connection_process"/>
 
         <receiver android:name=".band.receivers.NotificationReceiver"/>
 

@@ -3,12 +3,12 @@
 
     <item
         is-multidex="true"
-        jar="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jar="/home/mconstant/Documents/WBL/WBLLibrary/mobile/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="ea28f79bd7992f0d5bf1863da3072fa266e7128a">
-        <dex dex="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_76fe6edfaa768103fcabcc78e597dbca68f6f948/classes.dex" />
+        sha1="6188945d826f79570747b53c1a367828bc3202c7">
+        <dex dex="/home/mconstant/Documents/WBL/WBLLibrary/mobile/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_d590a29639d58efc9b6683ff8df8d0b05d7160b7/classes.dex" />
     </item>
 
 </items>

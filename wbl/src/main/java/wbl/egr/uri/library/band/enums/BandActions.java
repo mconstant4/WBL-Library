@@ -5,5 +5,5 @@ package wbl.egr.uri.library.band.enums;
  */
 
 public enum BandActions {
-    CONNECT, DISCONNECT, START_STREAM, STOP_STREAM, START, STOP
+    CONNECT, DISCONNECT, START_STREAM, STOP_STREAM, START, STOP, GET_INFO
 }

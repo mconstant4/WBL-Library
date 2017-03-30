@@ -13,6 +13,7 @@ import android.util.Log;
 import java.lang.ref.WeakReference;
 
 import wbl.egr.uri.library.band.enums.BandActions;
+import wbl.egr.uri.library.band.models.BandModel;
 import wbl.egr.uri.library.band.models.SensorModel;
 import wbl.egr.uri.library.band.receivers.BandInfoReceiver;
 import wbl.egr.uri.library.band.receivers.BandUpdateStateReceiver;
@@ -97,8 +98,9 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
             case "pref_enable_band_collection":
                 if (sharedPreferences.getBoolean(key, false)) {
                     new RequestHeartRateTask().execute(new WeakReference<Activity>(this));
-                    String[] sensors = {SensorModel.SENSOR_GSR, SensorModel.SENSOR_DISTANCE, SensorModel.SENSOR_HEART_RATE};
-                    BandConnectionService.connect(this, true, true, sensors);
+                    String[] sensors = {SensorModel.SENSOR_GSR, SensorModel.SENSOR_DISTANCE, SensorModel.SENSOR_HEART_RATE, SensorModel.SENSOR_CONTACT};
+                    BandModel bandModel = new BandModel(sensors, true, true);
+                    BandConnectionService.connect(this, bandModel);
                 } else {
                     BandConnectionService.stopStream(this);
                     BandConnectionService.disconnect(this);
