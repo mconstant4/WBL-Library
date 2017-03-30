@@ -266,7 +266,7 @@ public class BandConnectionJobService extends JobService {
             );
             builder.setExtras(bundle);
             if (isPeriodic) {
-                builder.setPeriodic(60000);
+                builder.setPeriodic(60000 * 2);
             } else {
                 builder.setOverrideDeadline(10);
             }

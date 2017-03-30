@@ -19,4 +19,14 @@ public class SensorModel {
     public static final String SENSOR_RR_INTERVAL = "sensor_rr";
     public static final String SENSOR_SKIN_TEMPERATURE = "sensor_skin_temp";
     public static final String SENSOR_UV = "sensor_uv";
+
+    public static final String[] DEFAULT_SENSORS = {
+            SENSOR_ACCELEROMETER,
+            SENSOR_AMBIENT_LIGHT,
+            SENSOR_CONTACT,
+            SENSOR_DISTANCE,
+            SENSOR_GSR,
+            SENSOR_HEART_RATE,
+            SENSOR_SKIN_TEMPERATURE
+    };
 }

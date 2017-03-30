@@ -12,10 +12,12 @@ import android.util.Log;
 
 import java.lang.ref.WeakReference;
 
+import wbl.egr.uri.library.band.enums.BandActions;
 import wbl.egr.uri.library.band.models.SensorModel;
 import wbl.egr.uri.library.band.receivers.BandInfoReceiver;
 import wbl.egr.uri.library.band.receivers.BandUpdateStateReceiver;
 import wbl.egr.uri.library.band.services.BandConnectionJobService;
+import wbl.egr.uri.library.band.services.BandConnectionService;
 import wbl.egr.uri.library.band.tasks.RequestHeartRateTask;
 
 /**
@@ -30,12 +32,12 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
     private BandUpdateStateReceiver mBandUpdateStateReceiver = new BandUpdateStateReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            switch (intent.getIntExtra(BandUpdateStateReceiver.EXTRA_NEW_STATE, -1)) {
+            /*switch (intent.getIntExtra(BandUpdateStateReceiver.EXTRA_NEW_STATE, -1)) {
                 case BandConnectionJobService.STATE_CONNECTED:
                     log("Connected");
                     BandConnectionJobService.requestBandInfo(mContext);
                     String[] sensors = {SensorModel.SENSOR_ACCELEROMETER, SensorModel.SENSOR_HEART_RATE, SensorModel.SENSOR_DISTANCE};
-                    BandConnectionJobService.startStream(mContext, false, sensors);
+                    BandConnectionJobService.startStream(mContext, true, sensors);
                     break;
                 case BandConnectionJobService.STATE_DISCONNECTED:
                     log("Disconnected");
@@ -50,7 +52,7 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
                 case BandConnectionJobService.STATE_BAND_OFF:
                     log("Band off");
                     break;
-            }
+            }*/
         }
     };
 
@@ -95,11 +97,11 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
             case "pref_enable_band_collection":
                 if (sharedPreferences.getBoolean(key, false)) {
                     new RequestHeartRateTask().execute(new WeakReference<Activity>(this));
-                    BandConnectionJobService.startService(this);
-                    BandConnectionJobService.connect(mContext, true);
+                    String[] sensors = {SensorModel.SENSOR_GSR, SensorModel.SENSOR_DISTANCE, SensorModel.SENSOR_HEART_RATE};
+                    BandConnectionService.connect(this, true, true, sensors);
                 } else {
-                    BandConnectionJobService.stopStream(mContext);
-                    BandConnectionJobService.disconnect(mContext);
+                    BandConnectionService.stopStream(this);
+                    BandConnectionService.disconnect(this);
                 }
                 break;
         }

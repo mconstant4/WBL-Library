@@ -1,9 +1,12 @@
 
 {
-	"buildFiles" : [ "/home/mconstant/Documents/WBL/WBLLibrary/mobile/CMakeLists.txt" ],
+	"buildFiles" : 
+	[
+		"/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/CMakeLists.txt"
+	],
 	"cleanCommands" : 
 	[
-		"/home/mconstant/Android/Sdk/cmake/3.6.3155560/bin/cmake --build /home/mconstant/Documents/WBL/WBLLibrary/mobile/.externalNativeBuild/cmake/release/arm64-v8a --target clean"
+		"/root/Android/Sdk/cmake/3.6.3155560/bin/cmake --build /home/mconstant/Documents/WBL/apps/WBL_Library/mobile/.externalNativeBuild/cmake/release/arm64-v8a --target clean"
 	],
 	"cppFileExtensions" : [ "cpp" ],
 	"libraries" : 
@@ -12,27 +15,27 @@
 		{
 			"abi" : "arm64-v8a",
 			"artifactName" : "native-lib",
-			"buildCommand" : "/home/mconstant/Android/Sdk/cmake/3.6.3155560/bin/cmake --build /home/mconstant/Documents/WBL/WBLLibrary/mobile/.externalNativeBuild/cmake/release/arm64-v8a --target native-lib",
+			"buildCommand" : "/root/Android/Sdk/cmake/3.6.3155560/bin/cmake --build /home/mconstant/Documents/WBL/apps/WBL_Library/mobile/.externalNativeBuild/cmake/release/arm64-v8a --target native-lib",
 			"buildType" : "release",
 			"files" : 
 			[
 				
 				{
-					"flags" : "  --target=aarch64-none-linux-android --gcc-toolchain=/home/mconstant/Android/Sdk/ndk-bundle/toolchains/aarch64-linux-android-4.9/prebuilt/linux-x86_64 --sysroot=/home/mconstant/Android/Sdk/ndk-bundle/platforms/android-21/arch-arm64  -Dnative_lib_EXPORTS -isystem /home/mconstant/Android/Sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include -isystem /home/mconstant/Android/Sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/libs/arm64-v8a/include -isystem /home/mconstant/Android/Sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/backward  -g -DANDROID -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -Wa,--noexecstack -Wformat -Werror=format-security  -g -DANDROID -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -Wa,--noexecstack -Wformat -Werror=format-security   -O2 -DNDEBUG -O2 -DNDEBUG  -fPIC    -c ",
-					"src" : "/home/mconstant/Documents/WBL/WBLLibrary/mobile/src/main/cpp/native-lib.cpp",
-					"workingDirectory" : "/home/mconstant/Documents/WBL/WBLLibrary/mobile/.externalNativeBuild/cmake/release/arm64-v8a"
+					"flags" : "  --target=aarch64-none-linux-android --gcc-toolchain=/root/Android/Sdk/ndk-bundle/toolchains/aarch64-linux-android-4.9/prebuilt/linux-x86_64 --sysroot=/root/Android/Sdk/ndk-bundle/platforms/android-21/arch-arm64  -Dnative_lib_EXPORTS -isystem /root/Android/Sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include -isystem /root/Android/Sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/libs/arm64-v8a/include -isystem /root/Android/Sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/backward  -g -DANDROID -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -Wa,--noexecstack -Wformat -Werror=format-security  -g -DANDROID -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -Wa,--noexecstack -Wformat -Werror=format-security   -O2 -DNDEBUG -O2 -DNDEBUG  -fPIC    -c ",
+					"src" : "/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/src/main/cpp/native-lib.cpp",
+					"workingDirectory" : "/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/.externalNativeBuild/cmake/release/arm64-v8a"
 				}
 			],
-			"output" : "/home/mconstant/Documents/WBL/WBLLibrary/mobile/build/intermediates/cmake/release/obj/arm64-v8a/libnative-lib.so",
-			"toolchain" : "9079252300154993184"
+			"output" : "/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/cmake/release/obj/arm64-v8a/libnative-lib.so",
+			"toolchain" : "11623287784116073175"
 		}
 	},
 	"toolchains" : 
 	{
-		"9079252300154993184" : 
+		"11623287784116073175" : 
 		{
-			"cCompilerExecutable" : "/home/mconstant/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/clang",
-			"cppCompilerExecutable" : "/home/mconstant/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/clang++"
+			"cCompilerExecutable" : "/root/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/clang",
+			"cppCompilerExecutable" : "/root/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/clang++"
 		}
 	}
 }

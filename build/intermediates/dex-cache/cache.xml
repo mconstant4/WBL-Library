@@ -2,103 +2,13 @@
 <items version="2" >
 
     <item
-        is-multidex="false"
-        jar="/home/mconstant/.android/build-cache/81eab9553ae7993e687d06f7e721cb910d6822ee/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="2f7e6e2dad1bccaf68a8820820adc6c0d5b96d37">
-        <dex dex="/home/mconstant/Documents/WBL/WBLLibrary/wear/build/intermediates/pre-dexed/debug/classes_2a91e42b69d723929d67b5760426b4bc49418e6f.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/mconstant/.android/build-cache/81eab9553ae7993e687d06f7e721cb910d6822ee/output/jars/libs/internal_impl-24.0.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="fcaf463e10e69c1923ccf1edeba3b4196d239e00">
-        <dex dex="/home/mconstant/Documents/WBL/WBLLibrary/wear/build/intermediates/pre-dexed/debug/internal_impl-24.0.0_721d899b5fd1d31d795be14ffc59373f2dc717e7.jar" />
-    </item>
-    <item
         is-multidex="true"
-        jar="/home/mconstant/Documents/WBL/WBLLibrary/wbl/build/intermediates/bundles/default/libs/microsoft-band.jar"
+        jar="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="f6c3d837bd041b6a3b4945f84c6ae1419f7be5e8">
-        <dex dex="/home/mconstant/Documents/WBL/WBLLibrary/mobile/build/intermediates/transforms/dex/debug/folders/1000/8/microsoft-band_7e833cf14cca6797d2aefb66f4255a177180da84/classes.dex" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/mconstant/Documents/WBL/WBLLibrary/wbl/build/intermediates/bundles/default/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="2d78b4b828f1a5da9ce8375aa5b1389d93479d9f">
-        <dex dex="/home/mconstant/Documents/WBL/WBLLibrary/mobile/build/intermediates/pre-dexed/debug/classes_16783a9bdd298012050b22e6caf7be9545c3281c.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/mconstant/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/24.0.0/support-annotations-24.0.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="2943c74db6d4346ab8c6531adac91fa05c137c40">
-        <dex dex="/home/mconstant/Documents/WBL/WBLLibrary/wear/build/intermediates/pre-dexed/debug/support-annotations-24.0.0_8db6f142db5dbdc86be9af84b49954018f7bc4bb.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/mconstant/Documents/WBL/WBLLibrary/wbl/build/intermediates/bundles/default/libs/microsoft-band.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="f6c3d837bd041b6a3b4945f84c6ae1419f7be5e8">
-        <dex dex="/home/mconstant/Documents/WBL/WBLLibrary/mobile/build/intermediates/pre-dexed/debug/microsoft-band_7e833cf14cca6797d2aefb66f4255a177180da84.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/mconstant/.android/build-cache/5cb3a23f71e4aa4b2bae3619f7bd3c7ec000a8d8/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="d4d699dd197929286d19b015f4c142b8360f2137">
-        <dex dex="/home/mconstant/Documents/WBL/WBLLibrary/wear/build/intermediates/pre-dexed/debug/classes_17f46fabec28aac6f0ff6ae88968c5e36ef88084.jar" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/mconstant/Documents/WBL/WBLLibrary/mobile/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="c82741bc129dd5f99f11a4ab8666ae24262053b6">
-        <dex dex="/home/mconstant/Documents/WBL/WBLLibrary/mobile/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_c26d51aa4e52200efa0e766e3143eefe25dc7a76/classes.dex" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/mconstant/.android/build-cache/d6e214a88f4afe487f372b3ca9e932b15a326150/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="cddfbb68753c7b1222ffb7af97bfd9ecf413aba7">
-        <dex dex="/home/mconstant/Documents/WBL/WBLLibrary/wear/build/intermediates/pre-dexed/debug/classes_c605433f35cb61ef54e00636ec40bc0f20ffefb7.jar" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/mconstant/Documents/WBL/WBLLibrary/mobile/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="a92a932c90cf480a72606b3bd8ad4d37c32cae57">
-        <dex dex="/home/mconstant/Documents/WBL/WBLLibrary/mobile/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_d590a29639d58efc9b6683ff8df8d0b05d7160b7/classes.dex" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/mconstant/.android/build-cache/e3a04abc7425551245e087349fbb38aea01eb884/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="4356e230a981d1bbf047d848b91bc0d9b7c5bacc">
-        <dex dex="/home/mconstant/Documents/WBL/WBLLibrary/wear/build/intermediates/pre-dexed/debug/classes_12f9a18b735bb220aa0fe7529a90eae3964b1e80.jar" />
+        sha1="ea28f79bd7992f0d5bf1863da3072fa266e7128a">
+        <dex dex="/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_76fe6edfaa768103fcabcc78e597dbca68f6f948/classes.dex" />
     </item>
 
 </items>

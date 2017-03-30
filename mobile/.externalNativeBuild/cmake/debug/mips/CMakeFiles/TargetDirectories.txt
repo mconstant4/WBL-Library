@@ -1,3 +1,3 @@
-/home/mconstant/Documents/WBL/WBLLibrary/mobile/.externalNativeBuild/cmake/debug/mips/CMakeFiles/rebuild_cache.dir
-/home/mconstant/Documents/WBL/WBLLibrary/mobile/.externalNativeBuild/cmake/debug/mips/CMakeFiles/edit_cache.dir
-/home/mconstant/Documents/WBL/WBLLibrary/mobile/.externalNativeBuild/cmake/debug/mips/CMakeFiles/native-lib.dir
+/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/.externalNativeBuild/cmake/debug/mips/CMakeFiles/rebuild_cache.dir
+/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/.externalNativeBuild/cmake/debug/mips/CMakeFiles/edit_cache.dir
+/home/mconstant/Documents/WBL/apps/WBL_Library/mobile/.externalNativeBuild/cmake/debug/mips/CMakeFiles/native-lib.dir
